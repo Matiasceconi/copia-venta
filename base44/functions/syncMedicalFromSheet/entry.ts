@@ -1,7 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
-const SPREADSHEET_ID = '1rcl45gx1ngyitLCwB37CHSfhHvEVlhZHXA6U0lb1eUw';
-
 function normalize(s) {
   return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
 }
@@ -42,8 +40,8 @@ function classifyEpisode(lesionConsulta, etapaRhb, fechaFinal) {
 const STATUS_PRIORITY = ['lesionado', 'en_recuperacion', 'kinesiologia', 'consulta'];
 const PLAYER_STATUS_MAP = { lesionado: 'Lesionado', en_recuperacion: 'En recuperación', alta: 'Disponible' };
 
-async function recalculateCurrentStatus(base44) {
-  const episodes = await base44.asServiceRole.entities.MedicalEpisode.filter({ linked: true }, '-fecha_inicio_tto', 5000);
+async function recalculateCurrentStatus(base44, activeOrgId) {
+  const episodes = await base44.asServiceRole.entities.MedicalEpisode.filter({ organization_id: activeOrgId, linked: true }, '-fecha_inicio_tto', 5000);
 
   const byPlayer = {};
   episodes.forEach((e) => {
@@ -52,7 +50,7 @@ async function recalculateCurrentStatus(base44) {
     byPlayer[e.player_id].push(e);
   });
 
-  const existingStatuses = await base44.asServiceRole.entities.MedicalCurrentStatus.list('-updated_at', 3000);
+  const existingStatuses = await base44.asServiceRole.entities.MedicalCurrentStatus.filter({ organization_id: activeOrgId }, '-updated_at', 3000);
   const statusByPlayer = {};
   existingStatuses.forEach((s) => { statusByPlayer[s.player_id] = s; });
 
@@ -80,6 +78,7 @@ async function recalculateCurrentStatus(base44) {
     if (currentStatus === 'en_recuperacion' || currentStatus === 'seguimiento') seguimientoCount++;
 
     const payload = {
+      organization_id: activeOrgId,
       player_id: playerId,
       current_status: currentStatus,
       active_episode_id: activeEpisode ? activeEpisode.id : '',
@@ -106,9 +105,31 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
 
+    // ── Autorización multi-tenant ──────────────────────────────────────────
+    const user = await base44.auth.me();
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    const activeOrgId = user.active_organization_id;
+    if (!activeOrgId) return Response.json({ error: 'No hay organización activa.' }, { status: 403 });
+    const myMemberships = await base44.entities.OrganizationMember.filter({ user_id: user.id, organization_id: activeOrgId, status: 'active' }, '-created_date', 1).catch(() => []);
+    if (myMemberships.length === 0 && user.role !== 'admin') {
+      return Response.json({ error: 'Sin membresía activa en la organización.' }, { status: 403 });
+    }
+
+    const body = await req.json().catch(() => ({}));
+    const spreadsheetId = (body.spreadsheet_id || "").trim();
+
+    // ── Sin configuración por organización → sincronización desactivada ─────
+    if (!spreadsheetId) {
+      return Response.json({
+        success: false,
+        disabled: true,
+        message: 'La sincronización con Google Sheets está desactivada. Configure un spreadsheet_id específico para esta organización antes de sincronizar.',
+      });
+    }
+
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
     const range = 'A:J';
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(range)}`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(range)}`;
     const resp = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } });
     if (!resp.ok) {
       const errText = await resp.text();
@@ -119,13 +140,14 @@ Deno.serve(async (req) => {
     if (rows.length < 2) {
       return Response.json({ success: true, rows_read: 0, created: 0, updated: 0, linked: 0, unlinked: 0 });
     }
-    // Fila 1 = título ("RESERVA 2026"), fila 2 = encabezados reales, fila 3+ = datos
     const dataRows = rows.slice(2);
 
+    // ── Solo entidades de la organización activa ────────────────────────────
+    const orgFilter = { organization_id: activeOrgId };
     const [players, aliases, existingEpisodes] = await Promise.all([
-      base44.asServiceRole.entities.Player.list('-created_date', 2000),
-      base44.asServiceRole.entities.PlayerAlias.list('-created_date', 3000),
-      base44.asServiceRole.entities.MedicalEpisode.filter({}, '-created_date', 3000),
+      base44.asServiceRole.entities.Player.filter(orgFilter, '-created_date', 2000),
+      base44.asServiceRole.entities.PlayerAlias.filter(orgFilter, '-created_date', 3000),
+      base44.asServiceRole.entities.MedicalEpisode.filter(orgFilter, '-created_date', 3000),
     ]);
 
     const byNormalizedName = {};
@@ -170,6 +192,7 @@ Deno.serve(async (req) => {
       const episodeKey = `${keyPart}|${fechaInicio || ''}|${normalize(lesionConsulta)}|${normalize(mmiiAfectado)}`;
 
       const payload = {
+        organization_id: activeOrgId,
         player_id: isLinked ? playerId : '',
         player_name_original: playerNameOriginal,
         categoria_division: row[1] || '',
@@ -200,10 +223,11 @@ Deno.serve(async (req) => {
       }
     }
 
-    const statusSummary = await recalculateCurrentStatus(base44);
+    const statusSummary = await recalculateCurrentStatus(base44, activeOrgId);
 
     return Response.json({
       success: true,
+      organization_id: activeOrgId,
       rows_read: dataRows.length,
       created,
       updated,

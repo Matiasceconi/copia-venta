@@ -12,7 +12,19 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
 
-    const episodes = await base44.asServiceRole.entities.MedicalEpisode.filter({ linked: true }, '-fecha_inicio_tto', 5000);
+    // ── Autorización multi-tenant ──────────────────────────────────────────
+    const user = await base44.auth.me();
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    const activeOrgId = user.active_organization_id;
+    if (!activeOrgId) return Response.json({ error: 'No hay organización activa.' }, { status: 403 });
+    const myMemberships = await base44.entities.OrganizationMember.filter({ user_id: user.id, organization_id: activeOrgId, status: 'active' }, '-created_date', 1).catch(() => []);
+    if (myMemberships.length === 0 && user.role !== 'admin') {
+      return Response.json({ error: 'Sin membresía activa en la organización.' }, { status: 403 });
+    }
+
+    // ── Solo episodios de la organización activa ────────────────────────────
+    const orgFilter = { organization_id: activeOrgId, linked: true };
+    const episodes = await base44.asServiceRole.entities.MedicalEpisode.filter(orgFilter, '-fecha_inicio_tto', 5000);
 
     const byPlayer = {};
     episodes.forEach((e) => {
@@ -21,7 +33,7 @@ Deno.serve(async (req) => {
       byPlayer[e.player_id].push(e);
     });
 
-    const existingStatuses = await base44.asServiceRole.entities.MedicalCurrentStatus.list('-updated_at', 3000);
+    const existingStatuses = await base44.asServiceRole.entities.MedicalCurrentStatus.filter({ organization_id: activeOrgId }, '-updated_at', 3000);
     const statusByPlayer = {};
     existingStatuses.forEach((s) => { statusByPlayer[s.player_id] = s; });
 
@@ -56,6 +68,7 @@ Deno.serve(async (req) => {
       if (currentStatus === 'en_recuperacion' || currentStatus === 'seguimiento') seguimientoCount++;
 
       const payload = {
+        organization_id: activeOrgId,
         player_id: playerId,
         current_status: currentStatus,
         active_episode_id: activeEpisode ? activeEpisode.id : '',
@@ -78,6 +91,7 @@ Deno.serve(async (req) => {
 
     return Response.json({
       success: true,
+      organization_id: activeOrgId,
       players_processed: upserted,
       lesionados_actuales: lesionadosCount,
       en_seguimiento: seguimientoCount,

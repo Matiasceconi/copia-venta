@@ -7,6 +7,10 @@
         "admin",
         "user"
       ]
+    },
+    "active_organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) actualmente activa para este usuario. Se sincroniza al cambiar de club y alimenta las reglas RLS de aislamiento multi-tenant."
     }
   },
   "required": [

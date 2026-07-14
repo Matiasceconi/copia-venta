@@ -1,7 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 import * as XLSX from 'npm:xlsx@0.18.5';
 
-const SOURCE_FILE_ID = '1tiZoeF9KjPyvntjBreRSsUhRsh1huMjm';
 const EXCEL_MIME = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 const SHEETS_MIME = 'application/vnd.google-apps.spreadsheet';
 const SUMATORIA_LOGICAL = 'Sumatoria de 6 pliegues';
@@ -72,23 +71,23 @@ function levenshtein(a, b) {
 }
 function rawObject(row) { return Object.fromEntries(row.map((value, idx) => [`c${idx + 1}`, value])); }
 
-async function getWorkbook(base44, driveToken, meta) {
+async function getWorkbook(base44, driveToken, meta, fileId) {
   if (meta.mimeType === EXCEL_MIME) {
-    const fileRes = await fetch(`https://www.googleapis.com/drive/v3/files/${SOURCE_FILE_ID}?alt=media`, { headers: { Authorization: `Bearer ${driveToken}` } });
+    const fileRes = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, { headers: { Authorization: `Bearer ${driveToken}` } });
     if (!fileRes.ok) throw new Error(await fileRes.text());
     const buf = await fileRes.arrayBuffer();
     return XLSX.read(new Uint8Array(buf), { type: 'array', cellDates: true });
   }
   if (meta.mimeType === SHEETS_MIME) {
     const sheets = await base44.asServiceRole.connectors.getConnection('googlesheets');
-    const metaRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SOURCE_FILE_ID}?fields=sheets.properties.title`, { headers: { Authorization: `Bearer ${sheets.accessToken}` } });
+    const metaRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${fileId}?fields=sheets.properties.title`, { headers: { Authorization: `Bearer ${sheets.accessToken}` } });
     if (!metaRes.ok) throw new Error(await metaRes.text());
     const titles = (await metaRes.json()).sheets.map((s) => s.properties.title);
     const names = [findSheetName(titles, SUMATORIA_ALIASES), findSheetName(titles, INFORME_ALIASES)].filter(Boolean);
     const workbook = { SheetNames: [], Sheets: {} };
     for (const title of names) {
       const range = encodeURIComponent(`'${title}'!A:Z`);
-      const valuesRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SOURCE_FILE_ID}/values/${range}`, { headers: { Authorization: `Bearer ${sheets.accessToken}` } });
+      const valuesRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${fileId}/values/${range}`, { headers: { Authorization: `Bearer ${sheets.accessToken}` } });
       if (!valuesRes.ok) throw new Error(await valuesRes.text());
       const values = (await valuesRes.json()).values || [];
       workbook.SheetNames.push(title);
@@ -98,9 +97,9 @@ async function getWorkbook(base44, driveToken, meta) {
   }
   throw new Error(`Formato no soportado: ${meta.mimeType}`);
 }
-async function updateSyncState(base44, meta, result = null) {
-  const states = await base44.asServiceRole.entities.NutritionSyncState.filter({ source_file_id: SOURCE_FILE_ID }, '-created_date', 1);
-  const payload = { source_file_id: SOURCE_FILE_ID, source_file_name: meta.name, source_mime_type: meta.mimeType, source_modified_time: meta.modifiedTime, last_synced_at: new Date().toISOString() };
+async function updateSyncState(base44, meta, fileId, activeOrgId, result = null) {
+  const states = await base44.asServiceRole.entities.NutritionSyncState.filter({ organization_id: activeOrgId, source_file_id: fileId }, '-created_date', 1);
+  const payload = { organization_id: activeOrgId, source_file_id: fileId, source_file_name: meta.name, source_mime_type: meta.mimeType, source_modified_time: meta.modifiedTime, last_synced_at: new Date().toISOString() };
   if (result) payload.last_sync_result = result;
   if (states[0]) await base44.asServiceRole.entities.NutritionSyncState.update(states[0].id, payload);
   else await base44.asServiceRole.entities.NutritionSyncState.create(payload);
@@ -200,19 +199,44 @@ async function upsertRecord(entity, payload, byKey, byRow, seenIds) {
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+
+    // ── Autorización multi-tenant ──────────────────────────────────────────
+    const user = await base44.auth.me();
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    const activeOrgId = user.active_organization_id;
+    if (!activeOrgId) return Response.json({ error: 'No hay organización activa.' }, { status: 403 });
+    const myMemberships = await base44.entities.OrganizationMember.filter({ user_id: user.id, organization_id: activeOrgId, status: 'active' }, '-created_date', 1).catch(() => []);
+    if (myMemberships.length === 0 && user.role !== 'admin') {
+      return Response.json({ error: 'Sin membresía activa en la organización.' }, { status: 403 });
+    }
+
+    const body = await req.json().catch(() => ({}));
+    const sourceFileId = (body.source_file_id || "").trim();
+
+    // ── Sin configuración por organización → sincronización desactivada ─────
+    if (!sourceFileId) {
+      return Response.json({
+        success: false,
+        disabled: true,
+        message: 'La sincronización con Google Drive está desactivada. Configure un source_file_id específico para esta organización antes de sincronizar.',
+      });
+    }
+
     const drive = await base44.asServiceRole.connectors.getConnection('googledrive');
-    const metaRes = await fetch(`https://www.googleapis.com/drive/v3/files/${SOURCE_FILE_ID}?fields=id,name,mimeType,modifiedTime,webViewLink`, { headers: { Authorization: `Bearer ${drive.accessToken}` } });
+    const metaRes = await fetch(`https://www.googleapis.com/drive/v3/files/${sourceFileId}?fields=id,name,mimeType,modifiedTime,webViewLink`, { headers: { Authorization: `Bearer ${drive.accessToken}` } });
     if (!metaRes.ok) return Response.json({ error: await metaRes.text() }, { status: 500 });
     const meta = await metaRes.json();
-    const workbook = await getWorkbook(base44, drive.accessToken, meta);
+    const workbook = await getWorkbook(base44, drive.accessToken, meta, sourceFileId);
     const assessmentExtract = extractAssessments(workbook);
     const interpretationExtract = extractInterpretations(workbook);
 
+    // ── Solo entidades de la organización activa ────────────────────────────
+    const orgFilter = { organization_id: activeOrgId };
     const [players, aliases, existingAssessments, existingInterpretations] = await Promise.all([
-      base44.asServiceRole.entities.Player.list('-created_date', 5000),
-      base44.asServiceRole.entities.PlayerAlias.list('-created_date', 5000),
-      base44.asServiceRole.entities.NutritionAssessment.list('-fecha', 5000),
-      base44.asServiceRole.entities.NutritionInterpretation.list('-fecha', 5000),
+      base44.asServiceRole.entities.Player.filter(orgFilter, '-created_date', 5000),
+      base44.asServiceRole.entities.PlayerAlias.filter(orgFilter, '-created_date', 5000),
+      base44.asServiceRole.entities.NutritionAssessment.filter(orgFilter, '-fecha', 5000),
+      base44.asServiceRole.entities.NutritionInterpretation.filter(orgFilter, '-fecha', 5000),
     ]);
     const resolvePlayer = buildPlayerResolver(players, aliases);
     const assessByKey = {}, assessByRow = {}, interpByKey = {}, interpByRow = {};
@@ -231,12 +255,13 @@ Deno.serve(async (req) => {
         if (!player) { unresolvedAssessments++; if (unresolvedSamples.length < 10) unresolvedSamples.push({ sheet: SUMATORIA_LOGICAL, row: item.rowNumber, name: item.originalName }); continue; }
         const key = `${player.id}|${item.fecha}|sumatoria_de_6_pliegues`;
         const payload = {
+          organization_id: activeOrgId,
           player_id: player.id, squad_id: player.squad_id || '', season_id: player.season_id || '', source_sheet_name: SUMATORIA_LOGICAL, source_sheet_row_id: `${SUMATORIA_LOGICAL}:${item.rowNumber}`, source_row_number: item.rowNumber,
           player_name_original: item.originalName, normalized_player_name: normalize(item.originalName), fecha: item.fecha, tipo_medicion: SUMATORIA_LOGICAL,
           edad: parseNumber(item.idx.edad >= 0 ? item.row[item.idx.edad] : ''), talla: parseNumber(item.idx.talla >= 0 ? item.row[item.idx.talla] : ''), peso: parseNumber(item.idx.peso >= 0 ? item.row[item.idx.peso] : ''),
           sumatoria_6p: parseNumber(item.idx.sum6p >= 0 ? item.row[item.idx.sum6p] : ''), imo: parseNumber(item.idx.imo >= 0 ? item.row[item.idx.imo] : ''), porcentaje_masa_muscular: parseNumber(item.idx.pctMM >= 0 ? item.row[item.idx.pctMM] : ''),
           kg_masa_muscular: parseNumber(item.idx.kgMM >= 0 ? item.row[item.idx.kgMM] : ''), porcentaje_grasa: parseNumber(item.idx.pctGrasa >= 0 ? item.row[item.idx.pctGrasa] : ''), kg_grasa: parseNumber(item.idx.kgGrasa >= 0 ? item.row[item.idx.kgGrasa] : ''),
-          classification_note: String(item.row[14] || item.row[17] || '').trim(), nutrition_assessment_key: key, linked: true, source: 'google_drive', source_file_id: SOURCE_FILE_ID, source_file_mime_type: meta.mimeType,
+          classification_note: String(item.row[14] || item.row[17] || '').trim(), nutrition_assessment_key: key, linked: true, source: 'google_drive', source_file_id: sourceFileId, source_file_mime_type: meta.mimeType,
           row_hash: rowHash(item.row), raw_values: rawObject(item.row), found_in_last_sync: true, last_synced_at: now, updated_at: now,
         };
         Object.keys(payload).forEach((k) => payload[k] === undefined && delete payload[k]);
@@ -252,11 +277,12 @@ Deno.serve(async (req) => {
         const assessmentKey = `${player.id}|${item.fecha}|sumatoria_de_6_pliegues`;
         const key = `${player.id}|${item.fecha}|informe_1_lectura`;
         const payload = {
+          organization_id: activeOrgId,
           player_id: player.id, squad_id: player.squad_id || '', season_id: player.season_id || '', source_sheet_name: INFORME_LOGICAL, source_sheet_row_id: `${INFORME_LOGICAL}:${item.rowNumber}`, source_row_number: item.rowNumber,
           player_name_original: item.originalName, normalized_player_name: normalize(item.originalName), fecha: item.fecha, period_start: item.period.start, period_end: item.period.end, position_label: String(item.row[0] || '').trim(),
           peso: parseNumber(item.row[3]), limite_mm: parseNumber(item.row[4]), triceps: parseNumber(item.row[5]), subescapular: parseNumber(item.row[6]), supraespinal: parseNumber(item.row[7]), abdominal: parseNumber(item.row[8]), muslo: parseNumber(item.row[9]), pantorrilla: parseNumber(item.row[10]),
           sumatoria_6p: parseNumber(item.row[11]), second_cut_sumatoria_6p: parseNumber(item.row[12]), cut_difference: parseNumber(item.row[13]), interpretation_note: String(item.row[13] || '').trim(),
-          nutrition_interpretation_key: key, nutrition_assessment_key: assessmentKey, nutrition_assessment_id: assessByKey[assessmentKey]?.id || '', linked: true, source_file_id: SOURCE_FILE_ID, source_file_mime_type: meta.mimeType, row_hash: rowHash(item.row), raw_values: rawObject(item.row), found_in_last_sync: true, last_synced_at: now, updated_at: now,
+          nutrition_interpretation_key: key, nutrition_assessment_key: assessmentKey, nutrition_assessment_id: assessByKey[assessmentKey]?.id || '', linked: true, source_file_id: sourceFileId, source_file_mime_type: meta.mimeType, row_hash: rowHash(item.row), raw_values: rawObject(item.row), found_in_last_sync: true, last_synced_at: now, updated_at: now,
         };
         Object.keys(payload).forEach((k) => payload[k] === undefined && delete payload[k]);
         const status = await upsertRecord(base44.asServiceRole.entities.NutritionInterpretation, payload, interpByKey, interpByRow, seenInterpretationIds);
@@ -266,25 +292,25 @@ Deno.serve(async (req) => {
 
     let assessmentsMarkedMissing = 0, interpretationsMarkedMissing = 0;
     for (const rec of existingAssessments) {
-      if (rec.source_file_id === SOURCE_FILE_ID && !seenAssessmentIds.has(rec.id) && rec.found_in_last_sync !== false) {
+      if (rec.source_file_id === sourceFileId && !seenAssessmentIds.has(rec.id) && rec.found_in_last_sync !== false) {
         await base44.asServiceRole.entities.NutritionAssessment.update(rec.id, { found_in_last_sync: false, updated_at: now });
         assessmentsMarkedMissing++;
       }
     }
     for (const rec of existingInterpretations) {
-      if (rec.source_file_id === SOURCE_FILE_ID && !seenInterpretationIds.has(rec.id) && rec.found_in_last_sync !== false) {
+      if (rec.source_file_id === sourceFileId && !seenInterpretationIds.has(rec.id) && rec.found_in_last_sync !== false) {
         await base44.asServiceRole.entities.NutritionInterpretation.update(rec.id, { found_in_last_sync: false, updated_at: now });
         interpretationsMarkedMissing++;
       }
     }
 
     const result = {
-      success: true, file_name: meta.name, file_type: meta.mimeType === EXCEL_MIME ? 'Excel (.xlsx)' : 'Google Sheets nativo', sheets_processed: [{ requested: SUMATORIA_LOGICAL, actual: assessmentExtract.sheetName, rows: assessmentExtract.rows.length }, { requested: INFORME_LOGICAL, actual: interpretationExtract.sheetName, rows: interpretationExtract.rows.length }],
+      success: true, organization_id: activeOrgId, file_name: meta.name, file_type: meta.mimeType === EXCEL_MIME ? 'Excel (.xlsx)' : 'Google Sheets nativo', sheets_processed: [{ requested: SUMATORIA_LOGICAL, actual: assessmentExtract.sheetName, rows: assessmentExtract.rows.length }, { requested: INFORME_LOGICAL, actual: interpretationExtract.sheetName, rows: interpretationExtract.rows.length }],
       rows_read: assessmentExtract.rows.length + interpretationExtract.rows.length, assessments_created: assessmentsCreated, assessments_updated: assessmentsUpdated, interpretations_created: interpretationsCreated, interpretations_updated: interpretationsUpdated,
       linked_rows: assessmentsCreated + assessmentsUpdated + interpretationsCreated + interpretationsUpdated, unresolved_assessments: unresolvedAssessments, unresolved_interpretations: unresolvedInterpretations, unresolved_samples: unresolvedSamples,
       not_found_marked: assessmentsMarkedMissing + interpretationsMarkedMissing, errors,
     };
-    await updateSyncState(base44, meta, result);
+    await updateSyncState(base44, meta, sourceFileId, activeOrgId, result);
     return Response.json(result);
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

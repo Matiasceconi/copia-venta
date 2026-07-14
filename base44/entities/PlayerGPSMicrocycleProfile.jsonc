@@ -2,6 +2,10 @@
   "name": "PlayerGPSMicrocycleProfile",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "player_id": {
       "type": "string",
       "description": "ID del jugador"
@@ -36,7 +40,7 @@
     },
     "avg_distance_25": {
       "type": "number",
-      "description": "D+ 25,0 km/h promedio (m)"
+      "description": "D+25,0 km/h promedio (m)"
     },
     "avg_sprints": {
       "type": "number",
@@ -64,6 +68,7 @@
     }
   },
   "required": [
+    "organization_id",
     "player_id",
     "md"
   ]

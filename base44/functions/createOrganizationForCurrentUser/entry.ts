@@ -8,6 +8,27 @@ Deno.serve(async (req) => {
 
     const body = await req.json().catch(() => ({}));
 
+    // 0. Idempotencia: si el usuario ya tiene una membresía activa, devolver esa organización
+    const existingMemberships = await base44.entities.OrganizationMember.filter({
+      user_id: user.id,
+      status: "active",
+    }, "-created_date", 100).catch(() => []);
+    if (existingMemberships.length > 0) {
+      const existingOrgId = existingMemberships[0].organization_id;
+      try {
+        const existingOrg = await base44.entities.Organization.get(existingOrgId);
+        return Response.json({
+          organization: existingOrg,
+          membership: existingMemberships[0],
+          roles: [],
+          idempotent: true,
+          message: "El usuario ya pertenece a una organización. No se creó un club duplicado.",
+        });
+      } catch (e) {
+        // La organización pudo haber sido eliminada; continuar para crear una nueva
+      }
+    }
+
     // 1. Validar nombre del club
     const name = (body.name || "").trim();
     if (!name || name.length < 2) {

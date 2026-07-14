@@ -2,6 +2,10 @@
   "name": "LibraryExerciseGPSData",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "library_exercise_id": {
       "type": "string",
       "description": "ID del ejercicio en FieldExerciseLibrary"
@@ -89,6 +93,7 @@
     }
   },
   "required": [
+    "organization_id",
     "library_exercise_id",
     "session_id",
     "exercise_id",

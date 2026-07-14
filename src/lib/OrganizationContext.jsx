@@ -106,6 +106,16 @@ export function OrganizationProvider({ children }) {
     }
   }
 
+  // Sincroniza la organización activa al campo active_organization_id del usuario.
+  // Esto alimenta las reglas RLS de aislamiento multi-tenant en el backend.
+  // Cubre carga inicial, selección manual y recarga de organizaciones.
+  useEffect(() => {
+    if (!user || !isAuthenticated) return;
+    base44.auth.updateMe({ active_organization_id: activeOrganizationId || "" }).catch((err) => {
+      console.warn("No se pudo sincronizar active_organization_id:", err?.message);
+    });
+  }, [user, isAuthenticated, activeOrganizationId]);
+
   const activeOrganization = organizations.find((o) => o.id === activeOrganizationId) || null;
   const activeMembership = memberships.find((m) => m.organization_id === activeOrganizationId) || null;
 

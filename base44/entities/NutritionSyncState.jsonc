@@ -2,6 +2,10 @@
   "name": "NutritionSyncState",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "source_file_id": {
       "type": "string",
       "description": "Archivo original en Google Drive"
@@ -36,6 +40,7 @@
     }
   },
   "required": [
+    "organization_id",
     "source_file_id"
   ]
 }

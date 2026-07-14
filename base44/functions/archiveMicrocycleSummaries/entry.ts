@@ -43,17 +43,31 @@ function buildSnapshot({ plan, squad, sessions, matches, rows, teamProfile, prev
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+
+    // ── Autorización multi-tenant ──────────────────────────────────────────
+    const user = await base44.auth.me();
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    const activeOrgId = user.active_organization_id;
+    if (!activeOrgId) return Response.json({ error: 'No hay organización activa.' }, { status: 403 });
+    const myMemberships = await base44.entities.OrganizationMember.filter({ user_id: user.id, organization_id: activeOrgId, status: 'active' }, '-created_date', 1).catch(() => []);
+    if (myMemberships.length === 0 && user.role !== 'admin') {
+      return Response.json({ error: 'Sin membresía activa en la organización.' }, { status: 403 });
+    }
+
     const body = await req.json().catch(() => ({}));
     const today = body.today || isoDate(new Date());
     const force = !!body.force_recalculate;
     const dryRun = !!body.dry_run;
-    const weeklyPlans = await base44.asServiceRole.entities.WeeklyPlan.list('-week_start', 1000);
-    const summaries = await base44.asServiceRole.entities.MicrocycleSummary.list('-fecha_inicio', 2000).catch(() => []);
-    const squads = await base44.asServiceRole.entities.Squad.list('-created_date', 300);
-    const sessions = await base44.asServiceRole.entities.TrainingSession.list('-date', 5000);
-    const matches = await base44.asServiceRole.entities.MatchReport.list('-date', 1000).catch(() => []);
-    const gpsRows = await base44.asServiceRole.entities.SessionGPSData.list('-created_date', 10000);
-    const teamProfiles = await base44.asServiceRole.entities.TeamGPSProfile.list('-updated_at', 1000).catch(() => []);
+
+    // ── Todas las consultas se filtran por organization_id ─────────────────
+    const orgFilter = { organization_id: activeOrgId };
+    const weeklyPlans = await base44.asServiceRole.entities.WeeklyPlan.filter(orgFilter, '-week_start', 1000);
+    const summaries = await base44.asServiceRole.entities.MicrocycleSummary.filter(orgFilter, '-fecha_inicio', 2000).catch(() => []);
+    const squads = await base44.asServiceRole.entities.Squad.filter(orgFilter, '-created_date', 300);
+    const sessions = await base44.asServiceRole.entities.TrainingSession.filter(orgFilter, '-date', 5000);
+    const matches = await base44.asServiceRole.entities.MatchReport.filter(orgFilter, '-date', 1000).catch(() => []);
+    const gpsRows = await base44.asServiceRole.entities.SessionGPSData.filter(orgFilter, '-created_date', 10000);
+    const teamProfiles = await base44.asServiceRole.entities.TeamGPSProfile.filter(orgFilter, '-updated_at', 1000).catch(() => []);
 
     const squadMap = Object.fromEntries(squads.map((s) => [s.id, s]));
     const plans = weeklyPlans.filter((p) => p.week_start && addDays(p.week_start, 6) < today)
@@ -76,6 +90,7 @@ Deno.serve(async (req) => {
       const previousSummary = summaries.filter((s) => s.squad_id === plan.squad_id && s.fecha_inicio < start).sort((a, b) => (b.fecha_inicio || '').localeCompare(a.fecha_inicio || ''))[0];
       const snapshot = buildSnapshot({ plan, squad, sessions: weekSessions, matches: weekMatches, rows: weekRows, teamProfile, previousSummary });
       const data = {
+        organization_id: activeOrgId,
         squad_id: plan.squad_id, squad_name: plan.squad_name || squad.name || '', season_id: squad.season || plan.season_id || '',
         microcycle_name: plan.microcycle_name || `Microciclo ${start}`, nombre_microciclo: plan.microcycle_name || `Microciclo ${start}`, fecha_inicio: start, fecha_fin: end,
         rival: mainMatch.rival || '', partido_asociado: mainMatch.rival || mainMatch.title || '', resultado: mainMatch.our_score != null && mainMatch.rival_score != null ? `${mainMatch.our_score}-${mainMatch.rival_score}` : '',
@@ -89,7 +104,7 @@ Deno.serve(async (req) => {
       if (existing) { await base44.asServiceRole.entities.MicrocycleSummary.update(existing.id, data); updated.push(existing.id); }
       else { const createdRecord = await base44.asServiceRole.entities.MicrocycleSummary.create(data); created.push(createdRecord.id); }
     }
-    return Response.json({ success: true, processed: plans.length, created: created.length, updated: updated.length, skipped: skipped.length, dry_run: dryRun });
+    return Response.json({ success: true, organization_id: activeOrgId, processed: plans.length, created: created.length, updated: updated.length, skipped: skipped.length, dry_run: dryRun });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
