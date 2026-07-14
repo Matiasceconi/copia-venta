@@ -1,0 +1,83 @@
+{
+  "name": "OrganizationMember",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) a la que pertenece la membres\u00eda"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "ID del usuario de la plataforma"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email del usuario (desnormalizado)"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Nombre visible del miembro"
+    },
+    "role_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "IDs de AppRole asignados dentro de la organizaci\u00f3n"
+    },
+    "squad_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "IDs de planteles a los que tiene acceso dentro de la organizaci\u00f3n"
+    },
+    "all_squads": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si true, tiene acceso a todos los planteles de la organizaci\u00f3n"
+    },
+    "is_owner": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si el miembro es propietario del club"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "invited",
+        "active",
+        "suspended",
+        "removed"
+      ],
+      "default": "invited",
+      "description": "Estado de la membres\u00eda"
+    },
+    "invited_by": {
+      "type": "string",
+      "description": "Email del usuario que invit\u00f3"
+    },
+    "invited_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Fecha de invitaci\u00f3n (ISO)"
+    },
+    "accepted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Fecha de aceptaci\u00f3n (ISO)"
+    },
+    "membership_key": {
+      "type": "string",
+      "description": "Clave \u00fanica de membres\u00eda: organization_id:user_id"
+    }
+  },
+  "required": [
+    "organization_id",
+    "user_id",
+    "user_email",
+    "membership_key"
+  ]
+}

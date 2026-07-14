@@ -4,7 +4,7 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "Nombre del estado (ej: Óptimo, A mejorar, Prioritario)"
+      "description": "Nombre del estado (ej: \u00d3ptimo, A mejorar, Prioritario)"
     },
     "color": {
       "type": "string",
@@ -12,16 +12,16 @@
     },
     "description": {
       "type": "string",
-      "description": "Descripción del estado nutricional"
+      "description": "Descripci\u00f3n del estado nutricional"
     },
     "order": {
       "type": "number",
-      "description": "Orden de visualización en la interfaz"
+      "description": "Orden de visualizaci\u00f3n en la interfaz"
     },
     "active": {
       "type": "boolean",
       "default": true,
-      "description": "Si el estado está activo y disponible para asignar"
+      "description": "Si el estado est\u00e1 activo y disponible para asignar"
     }
   },
   "required": [

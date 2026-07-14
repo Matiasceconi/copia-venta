@@ -1,0 +1,91 @@
+{
+  "name": "Organization",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nombre del club (ej: Club Atl\u00e9tico\u793a\u4f8b)"
+    },
+    "short_name": {
+      "type": "string",
+      "description": "Nombre corto / sigla (ej: CAE)"
+    },
+    "slug": {
+      "type": "string",
+      "description": "Identificador URL \u00fanico (ej: club-atletico-ejemplo)"
+    },
+    "logo_url": {
+      "type": "string",
+      "description": "URL del escudo del club"
+    },
+    "primary_color": {
+      "type": "string",
+      "description": "Color principal del club (hex)"
+    },
+    "secondary_color": {
+      "type": "string",
+      "description": "Color secundario del club (hex)"
+    },
+    "country": {
+      "type": "string",
+      "description": "Pa\u00eds del club"
+    },
+    "timezone": {
+      "type": "string",
+      "description": "Zona horaria (ej: America/Buenos_Aires)"
+    },
+    "locale": {
+      "type": "string",
+      "description": "Idioma/locale (ej: es-AR)"
+    },
+    "active_season": {
+      "type": "string",
+      "description": "Temporada activa (ej: 2026)"
+    },
+    "onboarding_completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si el club complet\u00f3 el asistente de configuraci\u00f3n inicial"
+    },
+    "subscription_plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "pro",
+        "elite"
+      ],
+      "default": "free",
+      "description": "Plan de suscripci\u00f3n"
+    },
+    "subscription_status": {
+      "type": "string",
+      "enum": [
+        "trial",
+        "active",
+        "past_due",
+        "suspended",
+        "cancelled"
+      ],
+      "default": "trial",
+      "description": "Estado de la suscripci\u00f3n"
+    },
+    "trial_ends_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Fecha de fin del per\u00edodo de prueba (ISO)"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si la organizaci\u00f3n est\u00e1 activa"
+    },
+    "created_by_email": {
+      "type": "string",
+      "description": "Email del usuario que cre\u00f3 la organizaci\u00f3n (created_by_id es provisto por la plataforma)"
+    }
+  },
+  "required": [
+    "name",
+    "slug"
+  ]
+}
