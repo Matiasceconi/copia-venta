@@ -2,6 +2,10 @@
   "name": "FieldExerciseLibrary",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "name": {
       "type": "string",
       "description": "Nombre del ejercicio"
@@ -148,6 +152,7 @@
     }
   },
   "required": [
+    "organization_id",
     "name"
   ]
 }

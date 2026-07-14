@@ -2,6 +2,10 @@
   "name": "PlayerAlias",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "player_id": {
       "type": "string",
       "description": "ID del jugador en Players (relaci\u00f3n obligatoria)"
@@ -39,6 +43,7 @@
     }
   },
   "required": [
+    "organization_id",
     "player_id",
     "alias_name",
     "normalized_alias"

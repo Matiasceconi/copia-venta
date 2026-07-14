@@ -4,7 +4,7 @@
   "properties": {
     "name": {
       "type": "string",
-      "description": "Nombre del club (ej: Club Atl\u00e9tico\u793a\u4f8b)"
+      "description": "Nombre del club"
     },
     "short_name": {
       "type": "string",
@@ -67,7 +67,7 @@
         "cancelled"
       ],
       "default": "trial",
-      "description": "Estado de la suscripci\u00f3n"
+      "description": "Estado de la suscripci\u00f3n (valor interno en ingl\u00e9s)"
     },
     "trial_ends_at": {
       "type": "string",
@@ -79,9 +79,13 @@
       "default": true,
       "description": "Si la organizaci\u00f3n est\u00e1 activa"
     },
+    "created_by_user_id": {
+      "type": "string",
+      "description": "ID del usuario que cre\u00f3 la organizaci\u00f3n"
+    },
     "created_by_email": {
       "type": "string",
-      "description": "Email del usuario que cre\u00f3 la organizaci\u00f3n (created_by_id es provisto por la plataforma)"
+      "description": "Email del usuario que cre\u00f3 la organizaci\u00f3n"
     }
   },
   "required": [

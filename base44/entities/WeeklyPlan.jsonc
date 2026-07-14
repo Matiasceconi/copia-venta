@@ -2,6 +2,10 @@
   "name": "WeeklyPlan",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "squad_id": {
       "type": "string",
       "description": "ID del plantel al que pertenece el plan"
@@ -51,6 +55,7 @@
     }
   },
   "required": [
+    "organization_id",
     "week_start"
   ]
 }

@@ -2,6 +2,10 @@
   "name": "RecoveryBackup",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "backup_key": {
       "type": "string",
       "description": "Clave \u00fanica de la copia de seguridad"
@@ -36,6 +40,7 @@
     }
   },
   "required": [
+    "organization_id",
     "backup_key",
     "entity_name",
     "chunk_index"

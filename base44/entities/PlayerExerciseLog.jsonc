@@ -2,6 +2,10 @@
   "name": "PlayerExerciseLog",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "exercise_id": {
       "type": "string",
       "description": "ID del ejercicio"
@@ -39,6 +43,7 @@
     }
   },
   "required": [
+    "organization_id",
     "exercise_id",
     "session_id",
     "player_id",

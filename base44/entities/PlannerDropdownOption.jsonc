@@ -2,6 +2,10 @@
   "name": "PlannerDropdownOption",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "group": {
       "type": "string",
       "description": "Grupo de lista desplegable del planificador, por ejemplo cooldown"
@@ -22,6 +26,7 @@
     }
   },
   "required": [
+    "organization_id",
     "group",
     "label"
   ]

@@ -2,6 +2,10 @@
   "name": "MatchPlayerMinutes",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "match_id": {
       "type": "string",
       "description": "ID del partido vinculado"
@@ -150,6 +154,7 @@
     }
   },
   "required": [
+    "organization_id",
     "match_id",
     "player_id",
     "match_player_key"

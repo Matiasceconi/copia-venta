@@ -2,6 +2,10 @@
   "name": "NutritionReadingStatus",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "name": {
       "type": "string",
       "description": "Nombre del estado (ej: \u00d3ptimo, A mejorar, Prioritario)"
@@ -25,6 +29,7 @@
     }
   },
   "required": [
+    "organization_id",
     "name"
   ]
 }

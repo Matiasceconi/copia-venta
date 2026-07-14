@@ -2,6 +2,10 @@
   "name": "CatapultReport",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "player_id": {
       "type": "string",
       "description": "ID del jugador (relaci\u00f3n con Player)"
@@ -77,6 +81,7 @@
     }
   },
   "required": [
+    "organization_id",
     "date"
   ]
 }

@@ -2,6 +2,10 @@
   "name": "UserAccess",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "staff_id": {
       "type": "string",
       "description": "ID del StaffMember vinculado (obligatorio)"
@@ -64,6 +68,7 @@
     }
   },
   "required": [
+    "organization_id",
     "staff_id",
     "user_email"
   ]

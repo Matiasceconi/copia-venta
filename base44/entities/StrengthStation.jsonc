@@ -2,6 +2,10 @@
   "name": "StrengthStation",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "session_id": {
       "type": "string",
       "description": "ID de la TrainingSession"
@@ -110,6 +114,7 @@
     }
   },
   "required": [
+    "organization_id",
     "session_id"
   ]
 }

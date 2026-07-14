@@ -2,6 +2,10 @@
   "name": "SessionExercise",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "session_id": {
       "type": "string",
       "description": "ID de la sesi\u00f3n (TrainingSession)"
@@ -93,6 +97,7 @@
     }
   },
   "required": [
+    "organization_id",
     "session_id",
     "name"
   ]

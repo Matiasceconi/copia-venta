@@ -3,12 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Video, LayoutDashboard, Menu, X, Map, UsersRound, CalendarDays, Trophy,
   ClipboardList, Settings2, ShieldCheck, BookOpen, Dumbbell, LogOut, User,
-  Gauge, HeartPulse, Heart, Apple, Clock, Repeat, PanelLeftClose, PanelLeftOpen
+  Gauge, HeartPulse, Heart, Apple, Clock, Repeat, PanelLeftClose, PanelLeftOpen, Building2
 } from "lucide-react";
 import SquadSelector from "@/components/workspace/SquadSelector";
 import UserProfileModal from "@/components/workspace/UserProfileModal";
 import { useAuth } from "@/lib/AuthContext";
 import { useWorkspace } from "@/lib/WorkspaceContext";
+import { useOrganization } from "@/lib/OrganizationContext";
 
 const NAV_ITEMS = [
   { label: "Dashboard", path: "/", icon: LayoutDashboard },
@@ -37,6 +38,8 @@ export default function Sidebar({ collapsed = false, onCollapsedChange }) {
   const [showProfile, setShowProfile] = useState(false);
   const { user } = useAuth();
   const { activeAreaName, canSeePath, requestAreaChange, myAreas } = useWorkspace();
+  const { organizations, activeOrganization, setActiveOrganization } = useOrganization();
+  const [showClubSelector, setShowClubSelector] = useState(false);
   const visibleItems = NAV_ITEMS.filter((item) => canSeePath(item.path));
 
   function NavLink({ item }) {
@@ -52,9 +55,22 @@ export default function Sidebar({ collapsed = false, onCollapsedChange }) {
         <div className={`${collapsed ? "lg:hidden" : ""}`}>
           <div className="p-4 border-b border-zinc-800 space-y-3">
             <div className="flex items-start justify-between gap-3">
-              <div>
-                <h1 className="text-sm font-bold text-white tracking-tight leading-tight">Defensa y Justicia</h1>
-                <p className="text-xs mt-0.5" style={{ color: "#F0C800" }}>PerformancePitch</p>
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-9 h-9 rounded-lg bg-zinc-800 flex items-center justify-center overflow-hidden shrink-0">
+                  {activeOrganization?.logo_url ? (
+                    <img src={activeOrganization.logo_url} alt="" className="w-full h-full object-contain" />
+                  ) : (
+                    <span className="text-xs font-black text-emerald-400">
+                      {activeOrganization?.short_name || "PP"}
+                    </span>
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <h1 className="text-sm font-bold text-white tracking-tight leading-tight truncate">
+                    {activeOrganization?.name || "PerformancePitch"}
+                  </h1>
+                  <p className="text-xs mt-0.5 text-zinc-500">PerformancePitch</p>
+                </div>
               </div>
               <button
                 type="button"
@@ -66,6 +82,15 @@ export default function Sidebar({ collapsed = false, onCollapsedChange }) {
                 <PanelLeftClose size={16} />
               </button>
             </div>
+            {organizations.length > 1 && (
+              <button
+                onClick={() => setShowClubSelector(true)}
+                className="w-full flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-600 transition-colors text-left"
+              >
+                <span className="text-xs text-zinc-300 truncate">{activeOrganization?.short_name || activeOrganization?.name || "Club"}</span>
+                <Building2 size={12} className="text-zinc-500 shrink-0" />
+              </button>
+            )}
             {myAreas.length > 1 && <button onClick={requestAreaChange} className="w-full flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-600 transition-colors text-left"><span className="text-xs text-zinc-300 truncate">{activeAreaName || "Área"}</span><Repeat size={12} className="text-zinc-500 shrink-0" /></button>}
             <SquadSelector />
           </div>
@@ -126,6 +151,41 @@ export default function Sidebar({ collapsed = false, onCollapsedChange }) {
         <button onClick={() => setOpen(false)} className="lg:hidden absolute top-4 right-4 text-zinc-500"><X size={18} /></button>
       </aside>
       {showProfile && <UserProfileModal onClose={() => setShowProfile(false)} />}
+      {showClubSelector && (
+        <div className="fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4" onClick={() => setShowClubSelector(false)}>
+          <div className="bg-zinc-900 rounded-2xl border border-zinc-800 w-full max-w-sm p-5" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-white font-bold text-base">Cambiar de club</h3>
+              <button onClick={() => setShowClubSelector(false)} className="text-zinc-500 hover:text-white"><X size={18} /></button>
+            </div>
+            <div className="space-y-2">
+              {organizations.map((org) => (
+                <button
+                  key={org.id}
+                  onClick={() => { setActiveOrganization(org.id); setShowClubSelector(false); }}
+                  className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-colors text-left ${
+                    org.id === activeOrganization?.id
+                      ? "border-emerald-500/50 bg-emerald-500/10"
+                      : "border-zinc-800 bg-zinc-950 hover:border-zinc-600"
+                  }`}
+                >
+                  <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center overflow-hidden shrink-0">
+                    {org.logo_url ? (
+                      <img src={org.logo_url} alt="" className="w-full h-full object-contain" />
+                    ) : (
+                      <span className="text-xs font-black text-emerald-400">{org.short_name || "PP"}</span>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white font-semibold text-sm truncate">{org.name}</p>
+                    <p className="text-zinc-500 text-xs truncate">{org.active_season || ""}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

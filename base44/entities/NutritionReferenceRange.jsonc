@@ -2,6 +2,10 @@
   "name": "NutritionReferenceRange",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "player_type": {
       "type": "string",
       "enum": [
@@ -43,6 +47,7 @@
     }
   },
   "required": [
+    "organization_id",
     "player_type",
     "metric_key",
     "label"

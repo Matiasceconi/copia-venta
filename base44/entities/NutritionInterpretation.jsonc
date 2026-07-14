@@ -2,6 +2,10 @@
   "name": "NutritionInterpretation",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "player_id": {
       "type": "string",
       "description": "ID del jugador vinculado en Players"
@@ -170,6 +174,7 @@
     }
   },
   "required": [
+    "organization_id",
     "player_id",
     "player_name_original",
     "fecha"

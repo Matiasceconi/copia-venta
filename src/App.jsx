@@ -16,6 +16,9 @@ import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
 import Layout from '@/components/staff/Layout';
 import { WorkspaceProvider } from '@/lib/WorkspaceContext';
+import { OrganizationProvider } from '@/lib/OrganizationContext';
+import OrganizationGate from '@/components/organization/OrganizationGate';
+import Onboarding from '@/pages/Onboarding';
 import { PlayerCard360Provider } from '@/components/player/PlayerCard360Context';
 import PlayerCard360 from '@/components/player/PlayerCard360';
 import Dashboard from '@/pages/Dashboard';
@@ -109,6 +112,8 @@ const AuthenticatedApp = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route element={<OrganizationGate />}>
         <Route element={<Layout />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/sessions" element={<Sessions />} />
@@ -135,6 +140,7 @@ const AuthenticatedApp = () => {
           <Route path="/field-library" element={<FieldLibrary />} />
           <Route path="/strength-library" element={<StrengthLibrary />} />
           <Route path="/users-access" element={<UsersAccess />} />
+          </Route>
         </Route>
       </Route>
       <Route path="*" element={<PageNotFound />} />
@@ -150,12 +156,14 @@ function App() {
         <QueryClientProvider client={queryClientInstance}>
           <Router>
             <ScrollToTop />
-            <WorkspaceProvider>
-              <PlayerCard360Provider>
-                <AuthenticatedApp />
-                <PlayerCard360 />
-              </PlayerCard360Provider>
-            </WorkspaceProvider>
+            <OrganizationProvider>
+              <WorkspaceProvider>
+                <PlayerCard360Provider>
+                  <AuthenticatedApp />
+                  <PlayerCard360 />
+                </PlayerCard360Provider>
+              </WorkspaceProvider>
+            </OrganizationProvider>
           </Router>
           <Toaster />
         </QueryClientProvider>

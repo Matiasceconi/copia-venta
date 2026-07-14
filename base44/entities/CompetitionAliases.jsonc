@@ -2,6 +2,10 @@
   "name": "CompetitionAliases",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "competition_id": {
       "type": "string",
       "description": "ID de la competencia oficial"
@@ -21,6 +25,7 @@
     }
   },
   "required": [
+    "organization_id",
     "competition_id",
     "alias",
     "normalized_alias"

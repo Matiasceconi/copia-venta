@@ -2,13 +2,17 @@
   "name": "Player",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "club_id": {
       "type": "string",
-      "description": "ID del club propietario del jugador"
+      "description": "ID del club propietario del jugador (legado)"
     },
     "club_name": {
       "type": "string",
-      "description": "Nombre del club propietario"
+      "description": "Nombre del club propietario (legado)"
     },
     "squad_id": {
       "type": "string",
@@ -169,6 +173,7 @@
     }
   },
   "required": [
+    "organization_id",
     "first_name",
     "last_name",
     "position"

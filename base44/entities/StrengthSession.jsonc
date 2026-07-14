@@ -2,6 +2,10 @@
   "name": "StrengthSession",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "title": {
       "type": "string",
       "description": "T\u00edtulo de la sesi\u00f3n de fuerza"
@@ -50,6 +54,7 @@
     }
   },
   "required": [
+    "organization_id",
     "title",
     "date"
   ]

@@ -2,6 +2,10 @@
   "name": "SessionVideoLink",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "session_id": {
       "type": "string",
       "description": "ID de la sesi\u00f3n (TrainingSession) a la que pertenece este link"
@@ -52,6 +56,7 @@
     }
   },
   "required": [
+    "organization_id",
     "session_id",
     "title",
     "video_url"

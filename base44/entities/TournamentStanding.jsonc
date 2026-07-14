@@ -2,6 +2,10 @@
   "name": "TournamentStanding",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "position": {
       "type": "number",
       "description": "Posici\u00f3n en la tabla"
@@ -60,6 +64,7 @@
     }
   },
   "required": [
+    "organization_id",
     "position",
     "team_name",
     "matches_played",

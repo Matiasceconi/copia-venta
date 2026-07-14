@@ -2,6 +2,10 @@
   "name": "AppRole",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "name": {
       "type": "string",
       "description": "Nombre del rol (ej: DT, Preparador F\u00edsico, M\u00e9dico)"
@@ -68,6 +72,7 @@
     }
   },
   "required": [
+    "organization_id",
     "name"
   ]
 }

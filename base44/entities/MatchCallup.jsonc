@@ -2,6 +2,10 @@
   "name": "MatchCallup",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "match_id": {
       "type": "string",
       "description": "ID del partido vinculado"
@@ -16,7 +20,7 @@
     },
     "club_id": {
       "type": "string",
-      "description": "ID del club propietario"
+      "description": "ID del club propietario (legado)"
     },
     "status": {
       "type": "string",
@@ -129,6 +133,7 @@
     }
   },
   "required": [
+    "organization_id",
     "match_id",
     "player_id",
     "callup_key"

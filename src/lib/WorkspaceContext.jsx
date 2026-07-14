@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/AuthContext";
 import SquadSelectModal from "@/components/workspace/SquadSelectModal";
 import AreaSelectScreen from "@/components/workspace/AreaSelectScreen";
 import { AREAS, PAGES, MODULE_ACTIONS } from "@/lib/areasConfig";
+import { useOrganization } from "@/lib/OrganizationContext";
 
 const WorkspaceContext = createContext(null);
 
@@ -32,6 +33,7 @@ const LEGACY_MODULE_PATHS = {
 
 export function WorkspaceProvider({ children }) {
   const { user, isAuthenticated } = useAuth();
+  const { activeOrganizationId } = useOrganization();
   const [squads, setSquads] = useState([]);
   const [activeSquad, setActiveSquadState] = useState(null);
   const [userAccess, setUserAccess] = useState(null);
@@ -61,12 +63,18 @@ export function WorkspaceProvider({ children }) {
       setLoadingWorkspace(false);
       return;
     }
+    if (!activeOrganizationId) {
+      setSquads([]);
+      setActiveSquadState(null);
+      setLoadingWorkspace(false);
+      return;
+    }
     setLoadingWorkspace(true);
     setWorkspaceError(null);
 
     try {
-      // 1. Fetch all active squads
-      const allSquads = await base44.entities.Squad.filter({ active: true }, "name", 100);
+      // 1. Fetch all active squads of the active organization
+      const allSquads = await base44.entities.Squad.filter({ organization_id: activeOrganizationId, active: true }, "name", 100);
       setSquads(allSquads);
 
       // 2. Find user access record by email
@@ -231,7 +239,7 @@ export function WorkspaceProvider({ children }) {
       hasLoadedOnceRef.current = true;
       setLoadingWorkspace(false);
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, activeOrganizationId]);
 
   useEffect(() => { loadWorkspace(); }, [loadWorkspace]);
 

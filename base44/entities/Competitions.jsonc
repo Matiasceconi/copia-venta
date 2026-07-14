@@ -2,6 +2,10 @@
   "name": "Competitions",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "name": {
       "type": "string",
       "description": "Nombre oficial de la competencia"
@@ -108,6 +112,7 @@
     }
   },
   "required": [
+    "organization_id",
     "name"
   ]
 }

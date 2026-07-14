@@ -2,6 +2,10 @@
   "name": "TrainingSession",
   "type": "object",
   "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n (club) propietaria del registro"
+    },
     "session_number": {
       "type": "number",
       "description": "N\u00famero correlativo visible de la sesi\u00f3n dentro del plantel/temporada"
@@ -146,6 +150,7 @@
     }
   },
   "required": [
+    "organization_id",
     "title",
     "date"
   ]
