@@ -42,5 +42,19 @@
   "required": [
     "organization_id",
     "source_file_id"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.organization_id": "{{user.data.active_organization_id}}"
+    },
+    "read": {
+      "data.organization_id": "{{user.data.active_organization_id}}"
+    },
+    "update": {
+      "data.organization_id": "{{user.data.active_organization_id}}"
+    },
+    "delete": {
+      "data.organization_id": "{{user.data.active_organization_id}}"
+    }
+  }
 }

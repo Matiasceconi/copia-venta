@@ -44,17 +44,26 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
 
-    // ── Autorización multi-tenant ──────────────────────────────────────────
+    const body = await req.json().catch(() => ({}));
+    const activeOrgId = (body.organization_id || '').trim();
+    if (!activeOrgId) return Response.json({ error: 'organization_id requerido.' }, { status: 400 });
+
+    // ── Autorización multi-tenant: verificar membresía Y permisos ──────────
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
-    const activeOrgId = user.active_organization_id;
-    if (!activeOrgId) return Response.json({ error: 'No hay organización activa.' }, { status: 403 });
-    const myMemberships = await base44.entities.OrganizationMember.filter({ user_id: user.id, organization_id: activeOrgId, status: 'active' }, '-created_date', 1).catch(() => []);
-    if (myMemberships.length === 0 && user.role !== 'admin') {
-      return Response.json({ error: 'Sin membresía activa en la organización.' }, { status: 403 });
+    const memberships = await base44.asServiceRole.entities.OrganizationMember.filter({
+      user_id: user.id, organization_id: activeOrgId, status: 'active',
+    }, '-created_date', 1);
+    if (memberships.length === 0) return Response.json({ error: 'Sin membresía activa en la organización.' }, { status: 403 });
+    const membership = memberships[0];
+    if (!membership.is_owner) {
+      const roleIds = membership.role_ids || [];
+      if (roleIds.length === 0) return Response.json({ error: 'Se requiere permiso de administrador.' }, { status: 403 });
+      const allRoles = await base44.asServiceRole.entities.AppRole.filter({ organization_id: activeOrgId, active: { $ne: false } }, 'name', 200).catch(() => []);
+      const myRoles = allRoles.filter((r) => roleIds.includes(r.id));
+      if (!myRoles.some((r) => r.can_admin === true)) return Response.json({ error: 'Se requiere permiso de administrador para archivar microciclos.' }, { status: 403 });
     }
 
-    const body = await req.json().catch(() => ({}));
     const today = body.today || isoDate(new Date());
     const force = !!body.force_recalculate;
     const dryRun = !!body.dry_run;

@@ -33,7 +33,7 @@ const LEGACY_MODULE_PATHS = {
 
 export function WorkspaceProvider({ children }) {
   const { user, isAuthenticated } = useAuth();
-  const { activeOrganizationId } = useOrganization();
+  const { activeOrganizationId, roles: orgContextRoles, reloadOrganizations } = useOrganization();
   const [squads, setSquads] = useState([]);
   const [activeSquad, setActiveSquadState] = useState(null);
   const [userAccess, setUserAccess] = useState(null);
@@ -97,12 +97,12 @@ export function WorkspaceProvider({ children }) {
       }
       setUserAccess(access);
 
-      // 4. Fetch assigned AppRole records (permissions/areas/pages come from here)
+      // 4. Usar roles del OrganizationContext (cargados via backend seguro)
+      //    No consultar AppRole directamente (leía roles globales de todas las orgs)
       const roleIds = access?.role_ids || [];
       let roles = [];
-      if (roleIds.length > 0) {
-        const allRoles = await base44.entities.AppRole.list("name", 200);
-        roles = allRoles.filter(r => roleIds.includes(r.id) && r.active !== false);
+      if (roleIds.length > 0 && orgContextRoles) {
+        roles = orgContextRoles.filter(r => roleIds.includes(r.id) && r.active !== false && r.organization_id === activeOrganizationId);
       }
       setRoleNames(roles.map(r => r.name));
 

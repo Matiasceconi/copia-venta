@@ -1,0 +1,53 @@
+{
+  "name": "IntegrationConfig",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "ID de la organizaci\u00f3n propietaria de esta configuraci\u00f3n"
+    },
+    "key": {
+      "type": "string",
+      "enum": [
+        "medical_spreadsheet_id",
+        "nutrition_source_file_id"
+      ],
+      "description": "Clave de configuraci\u00f3n de integraci\u00f3n"
+    },
+    "value": {
+      "type": "string",
+      "description": "Valor de configuraci\u00f3n (ID de spreadsheet o file de Drive)"
+    },
+    "label": {
+      "type": "string",
+      "description": "Etiqueta descriptiva opcional"
+    },
+    "updated_by": {
+      "type": "string",
+      "description": "ID del usuario que actualiz\u00f3 la configuraci\u00f3n"
+    },
+    "updated_by_email": {
+      "type": "string",
+      "description": "Email del usuario que actualiz\u00f3 la configuraci\u00f3n"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora de \u00faltima actualizaci\u00f3n (ISO)"
+    }
+  },
+  "required": [
+    "organization_id",
+    "key",
+    "value"
+  ],
+  "rls": {
+    "create": {
+      "data.organization_id": "__deny_all_direct_access__"
+    },
+    "read": false,
+    "update": {
+      "data.organization_id": "__deny_all_direct_access__"
+    },
+    "delete": false
+  }
+}

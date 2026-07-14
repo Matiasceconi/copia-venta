@@ -74,5 +74,19 @@
   "required": [
     "organization_id",
     "name"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.organization_id": "__deny_all_direct_access__"
+    },
+    "read": {
+      "data.organization_id": "{{user.data.active_organization_id}}"
+    },
+    "update": {
+      "data.organization_id": "__deny_all_direct_access__"
+    },
+    "delete": {
+      "data.organization_id": "__deny_all_direct_access__"
+    }
+  }
 }

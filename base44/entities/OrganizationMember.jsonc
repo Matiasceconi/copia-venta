@@ -79,5 +79,15 @@
     "user_id",
     "user_email",
     "membership_key"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.membership_key": "__deny_all_direct_access__"
+    },
+    "read": false,
+    "update": {
+      "data.membership_key": "__deny_all_direct_access__"
+    },
+    "delete": false
+  }
 }

@@ -8,6 +8,8 @@ export function OrganizationProvider({ children }) {
   const { user, isAuthenticated } = useAuth();
   const [organizations, setOrganizations] = useState([]);
   const [memberships, setMemberships] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [userAccessRecords, setUserAccessRecords] = useState([]);
   const [activeOrganizationId, setActiveOrganizationIdState] = useState(null);
   const [loadingOrganizations, setLoadingOrganizations] = useState(true);
   const [organizationError, setOrganizationError] = useState(null);
@@ -16,6 +18,8 @@ export function OrganizationProvider({ children }) {
     if (!isAuthenticated || !user) {
       setOrganizations([]);
       setMemberships([]);
+      setRoles([]);
+      setUserAccessRecords([]);
       setActiveOrganizationIdState(null);
       setLoadingOrganizations(false);
       return;
@@ -23,16 +27,21 @@ export function OrganizationProvider({ children }) {
     setLoadingOrganizations(true);
     setOrganizationError(null);
     try {
-      // 1. Buscar OrganizationMember activas del usuario (nunca Organization.list global)
-      const myMemberships = await base44.entities.OrganizationMember.filter({
-        user_id: user.id,
-        status: "active",
-      }, "-created_date", 100);
+      // 1. Cargar contexto completo desde backend (service role verifica membresía)
+      //    Nunca consulta Organization/OrganizationMember directamente.
+      const response = await base44.functions.invoke("getMyOrganizationContext", {});
+      const data = response.data || {};
+      const orgs = data.organizations || [];
+      const myMemberships = data.memberships || [];
+      const myRoles = data.roles || [];
+      const myUserAccess = data.user_access || [];
 
+      setOrganizations(orgs);
       setMemberships(myMemberships);
+      setRoles(myRoles);
+      setUserAccessRecords(myUserAccess);
 
       if (myMemberships.length === 0) {
-        setOrganizations([]);
         setActiveOrganizationIdState(null);
         localStorage.removeItem("activeOrganizationId");
         localStorage.removeItem("activeOrganizationUserId");
@@ -40,24 +49,10 @@ export function OrganizationProvider({ children }) {
         return;
       }
 
-      // 2. Obtener solo las organizaciones de esas membresías
-      const orgIds = [...new Set(myMemberships.map((m) => m.organization_id))];
-      const orgs = [];
-      for (const oid of orgIds) {
-        try {
-          const org = await base44.entities.Organization.get(oid);
-          if (org && org.active !== false) orgs.push(org);
-        } catch (e) {
-          // org podría haber sido eliminada
-        }
-      }
-      setOrganizations(orgs);
-
-      // 3. Restaurar organización activa desde localStorage
+      // 2. Restaurar organización activa desde localStorage (preferencia de UI)
       const savedOrgId = localStorage.getItem("activeOrganizationId");
       const savedOrgUser = localStorage.getItem("activeOrganizationUserId");
 
-      // Si cambió el usuario, limpiar selección anterior
       if (savedOrgUser && savedOrgUser !== user.id) {
         localStorage.removeItem("activeOrganizationId");
         localStorage.removeItem("activeOrganizationUserId");
@@ -75,7 +70,6 @@ export function OrganizationProvider({ children }) {
         localStorage.setItem("activeOrganizationId", orgs[0].id);
         localStorage.setItem("activeOrganizationUserId", user.id);
       } else if (orgs.length > 1) {
-        // Múltiples: no seleccionar automáticamente, mostrar selector
         setActiveOrganizationIdState(null);
       } else {
         setActiveOrganizationIdState(null);
@@ -92,32 +86,35 @@ export function OrganizationProvider({ children }) {
     loadOrganizations();
   }, [loadOrganizations]);
 
-  function setActiveOrganization(orgId) {
-    setActiveOrganizationIdState(orgId);
-    if (orgId) {
-      localStorage.setItem("activeOrganizationId", orgId);
-      localStorage.setItem("activeOrganizationUserId", user?.id || "");
-      // Limpiar plantel activo al cambiar de organización
-      localStorage.removeItem("activeSquadId");
-      localStorage.removeItem("activeSquadUserId");
-    } else {
+  // Cambiar organización activa — valida membresía en backend (setActiveOrganization)
+  async function setActiveOrganization(orgId) {
+    if (!orgId) {
+      setActiveOrganizationIdState(null);
       localStorage.removeItem("activeOrganizationId");
       localStorage.removeItem("activeOrganizationUserId");
+      return;
+    }
+    try {
+      // El backend verifica membresía activa con service role antes de permitir el cambio
+      const response = await base44.functions.invoke("setActiveOrganization", {
+        organization_id: orgId,
+      });
+      if (response.data?.verified) {
+        setActiveOrganizationIdState(orgId);
+        localStorage.setItem("activeOrganizationId", orgId);
+        localStorage.setItem("activeOrganizationUserId", user?.id || "");
+        localStorage.removeItem("activeSquadId");
+        localStorage.removeItem("activeSquadUserId");
+      }
+    } catch (err) {
+      console.error("setActiveOrganization error:", err);
+      throw err;
     }
   }
 
-  // Sincroniza la organización activa al campo active_organization_id del usuario.
-  // Esto alimenta las reglas RLS de aislamiento multi-tenant en el backend.
-  // Cubre carga inicial, selección manual y recarga de organizaciones.
-  useEffect(() => {
-    if (!user || !isAuthenticated) return;
-    base44.auth.updateMe({ active_organization_id: activeOrganizationId || "" }).catch((err) => {
-      console.warn("No se pudo sincronizar active_organization_id:", err?.message);
-    });
-  }, [user, isAuthenticated, activeOrganizationId]);
-
   const activeOrganization = organizations.find((o) => o.id === activeOrganizationId) || null;
   const activeMembership = memberships.find((m) => m.organization_id === activeOrganizationId) || null;
+  const activeOrganizationRoles = roles.filter((r) => r.organization_id === activeOrganizationId) || [];
 
   const hasOrganization = organizations.length > 0;
   const isOrganizationOwner = !!activeMembership?.is_owner;
@@ -132,6 +129,9 @@ export function OrganizationProvider({ children }) {
       value={{
         organizations,
         memberships,
+        roles,
+        activeOrganizationRoles,
+        userAccessRecords,
         activeOrganization,
         activeOrganizationId,
         activeMembership,

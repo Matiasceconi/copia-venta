@@ -59,7 +59,10 @@ export default function Onboarding() {
     setSubmitting(true);
     setError(null);
     try {
-      // 1. Crear organización + membresía + roles
+      // Generar request_key para idempotencia (evita duplicados por doble click)
+      const requestKey = (crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`);
+
+      // Crear organización + membresía + roles + primer plantel atómicamente en backend
       const response = await base44.functions.invoke("createOrganizationForCurrentUser", {
         name: form.name,
         short_name: form.short_name,
@@ -71,31 +74,21 @@ export default function Onboarding() {
         primary_color: form.primary_color,
         secondary_color: form.secondary_color,
         active_season: form.active_season,
-        onboarding_completed: true,
+        squad_name: form.squad_name || "Primera",
+        request_key: requestKey,
       });
       const org = response.data?.organization;
+      const squad = response.data?.squad;
       if (!org) throw new Error("No se pudo crear la organización.");
 
-      // 2. Crear el primer Squad con organization_id
-      const squad = await base44.entities.Squad.create({
-        organization_id: org.id,
-        name: form.squad_name || "Primera",
-        season: form.active_season,
-        active: true,
-      });
+      // Seleccionar la organización (valida membresía en backend)
+      await setActiveOrganization(org.id);
+      if (squad) {
+        localStorage.setItem("activeSquadId", squad.id);
+        localStorage.setItem("activeSquadUserId", user?.id || "");
+      }
 
-      // 3. Actualizar active_season en la organización
-      await base44.entities.Organization.update(org.id, {
-        active_season: form.active_season,
-        onboarding_completed: true,
-      });
-
-      // 4. Seleccionar la organización y plantel creados
-      setActiveOrganization(org.id);
-      localStorage.setItem("activeSquadId", squad.id);
-      localStorage.setItem("activeSquadUserId", user?.id || "");
-
-      // 5. Recargar organizaciones y redirigir al Dashboard
+      // Recargar organizaciones y redirigir al Dashboard
       await reloadOrganizations();
       navigate("/", { replace: true });
     } catch (err) {

@@ -86,10 +86,24 @@
     "created_by_email": {
       "type": "string",
       "description": "Email del usuario que cre\u00f3 la organizaci\u00f3n"
+    },
+    "request_key": {
+      "type": "string",
+      "description": "Clave de idempotencia para evitar duplicados de la misma solicitud de onboarding"
     }
   },
   "required": [
     "name",
     "slug"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "data.slug": "__deny_all_direct_access__"
+    },
+    "read": false,
+    "update": {
+      "data.slug": "__deny_all_direct_access__"
+    },
+    "delete": false
+  }
 }
