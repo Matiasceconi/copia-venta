@@ -1,0 +1,70 @@
+{
+  "name": "UserAccess",
+  "type": "object",
+  "properties": {
+    "staff_id": {
+      "type": "string",
+      "description": "ID del StaffMember vinculado (obligatorio)"
+    },
+    "staff_name": {
+      "type": "string",
+      "description": "Nombre completo del staff (desnormalizado)"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email del usuario de la plataforma"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Nombre completo (desnormalizado)"
+    },
+    "role": {
+      "type": "string",
+      "description": "Rol de negocio legado (texto libre, mantenido por compatibilidad). Los permisos reales se definen por role_ids"
+    },
+    "role_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "IDs de AppRole asignados a este usuario. Un usuario puede tener varios roles; los permisos y \u00e1reas se combinan (uni\u00f3n)"
+    },
+    "squad_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "IDs de planteles asignados. Vac\u00edo = ninguno (salvo all_squads=true)"
+    },
+    "squad_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Nombres de planteles (desnormalizado)"
+    },
+    "all_squads": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si true, tiene acceso a todos los planteles"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "last_seen": {
+      "type": "string",
+      "description": "\u00daltimo acceso (ISO datetime)"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "staff_id",
+    "user_email"
+  ]
+}

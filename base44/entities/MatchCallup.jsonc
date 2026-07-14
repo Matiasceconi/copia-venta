@@ -1,0 +1,136 @@
+{
+  "name": "MatchCallup",
+  "type": "object",
+  "properties": {
+    "match_id": {
+      "type": "string",
+      "description": "ID del partido vinculado"
+    },
+    "player_id": {
+      "type": "string",
+      "description": "ID estable del jugador convocado"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel del partido"
+    },
+    "club_id": {
+      "type": "string",
+      "description": "ID del club propietario"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "convocado",
+        "desconvocado",
+        "pendiente"
+      ],
+      "default": "convocado",
+      "description": "Estado de la convocatoria"
+    },
+    "callup_status": {
+      "type": "string",
+      "enum": [
+        "convocado",
+        "desconvocado",
+        "pendiente"
+      ],
+      "default": "convocado",
+      "description": "Estado expl\u00edcito de convocatoria"
+    },
+    "callup_key": {
+      "type": "string",
+      "description": "Clave l\u00f3gica \u00fanica match_id:player_id para evitar duplicados"
+    },
+    "lineup_role": {
+      "type": "string",
+      "enum": [
+        "titular",
+        "suplente",
+        "pendiente"
+      ],
+      "default": "pendiente",
+      "description": "Rol en la formaci\u00f3n: titular o suplente"
+    },
+    "shirt_number": {
+      "type": "number",
+      "description": "N\u00famero de camiseta detectado o asignado para el partido"
+    },
+    "source": {
+      "type": "string",
+      "description": "Origen de la convocatoria: manual, ai_import, excel_import"
+    },
+    "source_file": {
+      "type": "string",
+      "description": "Archivo fuente utilizado para importar la convocatoria"
+    },
+    "confidence": {
+      "type": "number",
+      "description": "Confianza de la coincidencia IA/importaci\u00f3n 0-1"
+    },
+    "detected_name": {
+      "type": "string",
+      "description": "Nombre le\u00eddo en el archivo"
+    },
+    "detected_position": {
+      "type": "string",
+      "description": "Ubicaci\u00f3n aproximada o texto original detectado"
+    },
+    "formation_x": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Posici\u00f3n horizontal del jugador en el campo de formaci\u00f3n, en porcentaje"
+    },
+    "formation_y": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Posici\u00f3n vertical del jugador en el campo de formaci\u00f3n, en porcentaje"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre del jugador desnormalizado para auditor\u00eda"
+    },
+    "player_number": {
+      "type": "number",
+      "description": "N\u00famero del jugador al momento de la convocatoria"
+    },
+    "player_position": {
+      "type": "string",
+      "description": "Posici\u00f3n del jugador al momento de la convocatoria"
+    },
+    "role_normalized_from_typo": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si el rol fue normalizado desde una variante ortogr\u00e1fica"
+    },
+    "import_batch_id": {
+      "type": "string",
+      "description": "ID del lote de importaci\u00f3n para auditor\u00eda y reversi\u00f3n"
+    },
+    "imported_at": {
+      "type": "string",
+      "description": "Fecha/hora en que fue importado"
+    },
+    "import_observation": {
+      "type": "string",
+      "description": "Observaci\u00f3n conservada desde la planilla"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Fecha/hora l\u00f3gica de creaci\u00f3n"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora l\u00f3gica de actualizaci\u00f3n"
+    }
+  },
+  "required": [
+    "match_id",
+    "player_id",
+    "callup_key"
+  ]
+}

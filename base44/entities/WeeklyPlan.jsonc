@@ -1,0 +1,56 @@
+{
+  "name": "WeeklyPlan",
+  "type": "object",
+  "properties": {
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel al que pertenece el plan"
+    },
+    "squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel (desnormalizado)"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada activa del plantel"
+    },
+    "week_start": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del lunes de la semana (YYYY-MM-DD)"
+    },
+    "microcycle_meta": {
+      "type": "object",
+      "description": "Encabezado editable del microciclo: semana, rango, pr\u00f3ximo partido, d\u00eda actual, tipo de semana y campos configurables"
+    },
+    "template_type": {
+      "type": "string",
+      "description": "Plantilla de microciclo aplicada"
+    },
+    "graph_type": {
+      "type": "string",
+      "enum": [
+        "barras",
+        "linea",
+        "area",
+        "radar"
+      ],
+      "default": "barras",
+      "description": "Tipo de gr\u00e1fico seleccionado para distribuci\u00f3n de carga"
+    },
+    "days_data": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Array de d\u00edas con planificaci\u00f3n flexible, bloques editables, sesiones vinculadas, indicadores de calendario y datos del microciclo"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notas generales de la semana"
+    }
+  },
+  "required": [
+    "week_start"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "StrengthExercise",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "ID de la sesi\u00f3n de fuerza"
+    },
+    "name": {
+      "type": "string",
+      "description": "Nombre del ejercicio"
+    },
+    "sets": {
+      "type": "number",
+      "description": "Series"
+    },
+    "reps": {
+      "type": "string",
+      "description": "Repeticiones o tiempo"
+    },
+    "load": {
+      "type": "string",
+      "description": "Carga (kg, %, RPE, etc.)"
+    },
+    "rest_seconds": {
+      "type": "number",
+      "description": "Descanso en segundos"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Link de imagen del ejercicio"
+    },
+    "order": {
+      "type": "number",
+      "description": "Orden dentro de la sesi\u00f3n"
+    }
+  },
+  "required": [
+    "session_id",
+    "name"
+  ]
+}

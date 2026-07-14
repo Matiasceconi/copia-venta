@@ -1,0 +1,143 @@
+{
+  "name": "DayEvent",
+  "type": "object",
+  "properties": {
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel al que pertenece el evento"
+    },
+    "squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel (desnormalizado)"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada activa del plantel"
+    },
+    "match_id": {
+      "type": "string",
+      "description": "ID del MatchReport vinculado si el evento es Partido"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del evento (YYYY-MM-DD)"
+    },
+    "time": {
+      "type": "string",
+      "description": "Hora principal del evento (HH:MM), compatible con calendario existente"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "Hora de inicio detectada (HH:MM)"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "Hora de fin detectada (HH:MM)"
+    },
+    "title": {
+      "type": "string",
+      "description": "T\u00edtulo del evento"
+    },
+    "type": {
+      "type": "string",
+      "description": "Tipo de evento compatible con calendario existente"
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Tipo normalizado del evento: Entrenamiento, Partido, Descanso, Viaje, Comida, Video, Gimnasio, Cancha, Reuni\u00f3n, Otro"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "description": "Duraci\u00f3n en minutos"
+    },
+    "location": {
+      "type": "string",
+      "description": "Lugar del evento"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones"
+    },
+    "color": {
+      "type": "string",
+      "description": "Color del evento",
+      "default": "blue"
+    },
+    "rival": {
+      "type": "string",
+      "description": "Rival detectado si el evento es Partido"
+    },
+    "rival_club_id": {
+      "type": "string",
+      "description": "ID del club rival en RivalClub"
+    },
+    "home_away": {
+      "type": "string",
+      "enum": [
+        "Local",
+        "Visitante",
+        "Neutral",
+        ""
+      ],
+      "description": "Condici\u00f3n del partido si se detecta"
+    },
+    "rival_logo_url": {
+      "type": "string",
+      "description": "URL del escudo rival (para eventos de partido)"
+    },
+    "competition": {
+      "type": "string",
+      "description": "Nombre de competencia"
+    },
+    "competition_id": {
+      "type": "string",
+      "description": "ID de competencia"
+    },
+    "competition_stage": {
+      "type": "string",
+      "description": "Fase o instancia"
+    },
+    "competition_round": {
+      "type": "string",
+      "description": "Jornada o instancia textual"
+    },
+    "matchday_number": {
+      "type": "number",
+      "description": "N\u00famero de fecha/jornada"
+    },
+    "phase_label": {
+      "type": "string",
+      "description": "Etiqueta visible de etapa"
+    },
+    "source_file": {
+      "type": "string",
+      "description": "URL del archivo de origen importado"
+    },
+    "source_file_name": {
+      "type": "string",
+      "description": "Nombre del archivo de origen"
+    },
+    "created_by_ai": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indica si el evento fue creado desde Importar cronograma con IA"
+    },
+    "import_key": {
+      "type": "string",
+      "description": "Clave de upsert: plantel + fecha + hora + tipo"
+    },
+    "sync_source": {
+      "type": "string",
+      "description": "\u00daltimo origen de sincronizaci\u00f3n: calendar o matches"
+    },
+    "sync_updated_at": {
+      "type": "string",
+      "description": "\u00daltima sincronizaci\u00f3n calendario/partido"
+    }
+  },
+  "required": [
+    "title",
+    "date"
+  ]
+}

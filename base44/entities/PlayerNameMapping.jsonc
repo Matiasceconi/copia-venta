@@ -1,0 +1,33 @@
+{
+  "name": "PlayerNameMapping",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador de referencia"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre oficial del jugador en el sistema"
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lista de variaciones de nombres que mapean a este jugador (ej: 'Pucheta Juan Alberto Miguel', 'Puchetta Juan', 'Juan Pucheta')"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Fuentes donde se encontraron estas variaciones (ej: 'Catapult', 'GPS', 'Manual')",
+      "default": []
+    }
+  },
+  "required": [
+    "player_id",
+    "player_name"
+  ]
+}

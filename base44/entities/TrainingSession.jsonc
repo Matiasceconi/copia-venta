@@ -1,0 +1,152 @@
+{
+  "name": "TrainingSession",
+  "type": "object",
+  "properties": {
+    "session_number": {
+      "type": "number",
+      "description": "N\u00famero correlativo visible de la sesi\u00f3n dentro del plantel/temporada"
+    },
+    "title": {
+      "type": "string",
+      "description": "T\u00edtulo de la sesi\u00f3n"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de la sesi\u00f3n"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel"
+    },
+    "squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel (desnormalizado)"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada del plantel"
+    },
+    "period": {
+      "type": "string",
+      "enum": [
+        "Pretemporada",
+        "Competencia",
+        "Transici\u00f3n"
+      ],
+      "default": "Competencia",
+      "description": "Per\u00edodo de planificaci\u00f3n de la sesi\u00f3n"
+    },
+    "match_day_code": {
+      "type": "string",
+      "description": "C\u00f3digo del d\u00eda del microciclo heredado del Plan Semanal, editable como excepci\u00f3n"
+    },
+    "md_manual_override": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si true, el MD fue modificado manualmente en la sesi\u00f3n y no se pisa desde el Plan Semanal"
+    },
+    "microcycle_day": {
+      "type": "string",
+      "description": "D\u00eda usado para perfiles GPS de microciclo, sincronizado con match_day_code"
+    },
+    "session_objective": {
+      "type": "string",
+      "description": "Objetivo f\u00edsico heredado del Plan Semanal, editable como excepci\u00f3n"
+    },
+    "physical_objective_manual_override": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si true, el objetivo f\u00edsico fue modificado manualmente en la sesi\u00f3n y no se pisa desde el Plan Semanal"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "description": "Duraci\u00f3n en minutos"
+    },
+    "location": {
+      "type": "string",
+      "description": "Lugar del entrenamiento"
+    },
+    "intensity_goal": {
+      "type": "string",
+      "enum": [
+        "Baja",
+        "Media",
+        "Alta"
+      ],
+      "description": "Intensidad objetivo (legado)"
+    },
+    "players_available": {
+      "type": "number",
+      "description": "Jugadores disponibles"
+    },
+    "players_selected": {
+      "type": "number",
+      "description": "Jugadores seleccionados"
+    },
+    "players_absent": {
+      "type": "number",
+      "description": "Jugadores ausentes"
+    },
+    "players_differentiated": {
+      "type": "number",
+      "description": "Jugadores diferenciados"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "URL del video general de la sesi\u00f3n"
+    },
+    "csv_url": {
+      "type": "string",
+      "description": "URL del CSV GPS de la sesi\u00f3n"
+    },
+    "csv_label": {
+      "type": "string",
+      "description": "Nombre del archivo CSV GPS"
+    },
+    "pdf_exported": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si la sesi\u00f3n fue exportada al menos una vez"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Usuario que cre\u00f3 la sesi\u00f3n"
+    },
+    "strength_microcycle": {
+      "type": "string",
+      "description": "Microciclo (m\u00f3dulo fuerza)"
+    },
+    "strength_session_number": {
+      "type": "string",
+      "description": "N\u00famero de sesi\u00f3n de fuerza"
+    },
+    "strength_purpose": {
+      "type": "string",
+      "description": "Prop\u00f3sito mec\u00e1nico de la sesi\u00f3n de fuerza"
+    },
+    "strength_session_type": {
+      "type": "string",
+      "description": "Tipo de sesi\u00f3n de fuerza"
+    },
+    "strength_vector_pattern": {
+      "type": "string",
+      "description": "Patr\u00f3n vectorial de la sesi\u00f3n de fuerza"
+    },
+    "import_source": {
+      "type": "string",
+      "enum": [
+        "excel_historico"
+      ],
+      "description": "Origen de importaci\u00f3n masiva"
+    },
+    "gps_report_observations": {
+      "type": "string",
+      "description": "Observaciones editables del Informe de Sesi\u00f3n GPS"
+    }
+  },
+  "required": [
+    "title",
+    "date"
+  ]
+}

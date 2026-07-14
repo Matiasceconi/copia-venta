@@ -1,0 +1,176 @@
+{
+  "name": "Player",
+  "type": "object",
+  "properties": {
+    "club_id": {
+      "type": "string",
+      "description": "ID del club propietario del jugador"
+    },
+    "club_name": {
+      "type": "string",
+      "description": "Nombre del club propietario"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel principal actual"
+    },
+    "squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel principal actual"
+    },
+    "dni": {
+      "type": "string",
+      "description": "DNI \u00fanico del jugador \u2014 identificador estable"
+    },
+    "first_name": {
+      "type": "string",
+      "description": "Nombre"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Apellido"
+    },
+    "full_name": {
+      "type": "string",
+      "description": "Nombre completo (generado autom\u00e1ticamente)"
+    },
+    "normalized_name": {
+      "type": "string",
+      "description": "Nombre normalizado para b\u00fasqueda (min\u00fascula, sin tildes)"
+    },
+    "birth_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de nacimiento"
+    },
+    "age": {
+      "type": "number",
+      "description": "Edad calculada"
+    },
+    "category": {
+      "type": "string",
+      "description": "Categor\u00eda (ej: 2005, Sub-20, Juvenil)"
+    },
+    "division": {
+      "type": "string",
+      "description": "Divisi\u00f3n / Equipo (ej: Primera, Reserva)"
+    },
+    "position": {
+      "type": "string",
+      "enum": [
+        "Arquero",
+        "Defensor Central",
+        "Lateral Derecho",
+        "Lateral Izquierdo",
+        "Mediocampista Central",
+        "Volante Interno",
+        "Extremo",
+        "Delantero Centro"
+      ],
+      "description": "Posici\u00f3n principal"
+    },
+    "position_group": {
+      "type": "string",
+      "enum": [
+        "Arqueros",
+        "Defensores",
+        "Mediocampistas",
+        "Extremos",
+        "Delanteros"
+      ],
+      "description": "Grupo posicional (calculado autom\u00e1ticamente desde position)"
+    },
+    "player_type": {
+      "type": "string",
+      "enum": [
+        "arquero",
+        "jugador_campo"
+      ],
+      "default": "jugador_campo",
+      "description": "Tipo de jugador: arquero o jugador de campo. Si position=Arquero \u2192 arquero, si no \u2192 jugador_campo"
+    },
+    "secondary_position": {
+      "type": "string",
+      "description": "Posici\u00f3n secundaria"
+    },
+    "dominant_leg": {
+      "type": "string",
+      "enum": [
+        "Derecha",
+        "Izquierda",
+        "Ambidiestro"
+      ],
+      "description": "Pierna h\u00e1bil"
+    },
+    "height": {
+      "type": "number",
+      "description": "Altura en cm"
+    },
+    "weight": {
+      "type": "number",
+      "description": "Peso en kg"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Disponible",
+        "Lesionado",
+        "En recuperaci\u00f3n",
+        "Suspendido",
+        "Permiso",
+        "Selecci\u00f3n",
+        "Subio a primera",
+        "Bajo a juveniles",
+        "Subieron de juveniles",
+        "Bajo de primera",
+        "Sparring"
+      ],
+      "default": "Disponible",
+      "description": "Estado actual del jugador"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Jugador activo en el plantel"
+    },
+    "jersey_number": {
+      "type": "number",
+      "description": "N\u00famero de camiseta"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "Foto de perfil del jugador"
+    },
+    "document_number": {
+      "type": "string",
+      "description": "DNI / Documento (alias de dni para compatibilidad)"
+    },
+    "birth_place": {
+      "type": "string",
+      "description": "Lugar de nacimiento"
+    },
+    "current_residence": {
+      "type": "string",
+      "description": "Residencia actual"
+    },
+    "club_housing": {
+      "type": "boolean",
+      "default": false,
+      "description": "Reside en pensi\u00f3n"
+    },
+    "has_contract": {
+      "type": "boolean",
+      "default": false,
+      "description": "Tiene contrato"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notas adicionales"
+    }
+  },
+  "required": [
+    "first_name",
+    "last_name",
+    "position"
+  ]
+}

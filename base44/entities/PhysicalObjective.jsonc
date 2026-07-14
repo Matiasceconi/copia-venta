@@ -1,0 +1,40 @@
+{
+  "name": "PhysicalObjective",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nombre del objetivo f\u00edsico"
+    },
+    "color": {
+      "type": "string",
+      "description": "Color principal del objetivo"
+    },
+    "text_color": {
+      "type": "string",
+      "description": "Color del texto sobre el objetivo"
+    },
+    "border_color": {
+      "type": "string",
+      "description": "Color de borde del objetivo"
+    },
+    "order": {
+      "type": "number",
+      "default": 0,
+      "description": "Orden de aparici\u00f3n"
+    },
+    "hidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si est\u00e1 oculto en el selector"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si el objetivo est\u00e1 activo"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

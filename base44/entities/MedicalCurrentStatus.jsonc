@@ -1,0 +1,43 @@
+{
+  "name": "MedicalCurrentStatus",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "Plantel del jugador"
+    },
+    "current_status": {
+      "type": "string",
+      "enum": [
+        "disponible",
+        "lesionado",
+        "en_recuperacion",
+        "kinesiologia",
+        "seguimiento",
+        "alta"
+      ],
+      "default": "disponible",
+      "description": "Estado m\u00e9dico actual del jugador (fuente de verdad para el Dashboard)"
+    },
+    "active_episode_id": {
+      "type": "string",
+      "description": "ID del MedicalEpisode activo que determina el estado actual"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora del \u00faltimo rec\u00e1lculo (ISO)"
+    },
+    "updated_by": {
+      "type": "string",
+      "description": "Usuario que actualiz\u00f3 manualmente el estado (si aplica)"
+    }
+  },
+  "required": [
+    "player_id",
+    "current_status"
+  ]
+}

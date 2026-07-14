@@ -1,0 +1,28 @@
+{
+  "name": "CompetitionAliases",
+  "type": "object",
+  "properties": {
+    "competition_id": {
+      "type": "string",
+      "description": "ID de la competencia oficial"
+    },
+    "alias": {
+      "type": "string",
+      "description": "Texto alternativo recibido desde importaciones o registros hist\u00f3ricos"
+    },
+    "normalized_alias": {
+      "type": "string",
+      "description": "Alias normalizado para coincidencias"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si el alias est\u00e1 activo"
+    }
+  },
+  "required": [
+    "competition_id",
+    "alias",
+    "normalized_alias"
+  ]
+}

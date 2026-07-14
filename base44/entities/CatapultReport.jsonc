@@ -1,0 +1,82 @@
+{
+  "name": "CatapultReport",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador (relaci\u00f3n con Player)"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre del jugador en el CSV (para referencia)"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del reporte"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "ID de la sesi\u00f3n asociada"
+    },
+    "session_label": {
+      "type": "string",
+      "description": "Etiqueta de la sesi\u00f3n"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL del archivo CSV original"
+    },
+    "pdf_url": {
+      "type": "string",
+      "description": "URL del informe PDF diario"
+    },
+    "total_duration": {
+      "type": "number",
+      "description": "Duraci\u00f3n total (minutos)"
+    },
+    "total_distance": {
+      "type": "number",
+      "description": "Distancia total (m)"
+    },
+    "distance_hsr": {
+      "type": "number",
+      "description": "Distancia 19.8-25 km/h (m)"
+    },
+    "sprint_distance": {
+      "type": "number",
+      "description": "Distancia +25 km/h (m)"
+    },
+    "sprint_efforts": {
+      "type": "number",
+      "description": "Sprint Efforts"
+    },
+    "accelerations": {
+      "type": "number",
+      "description": "Aceleraciones +3 m/s\u00b2"
+    },
+    "decelerations": {
+      "type": "number",
+      "description": "Desaceleraciones +3 m/s\u00b2"
+    },
+    "player_load": {
+      "type": "number",
+      "description": "Player Load"
+    },
+    "max_velocity": {
+      "type": "number",
+      "description": "Velocidad m\u00e1xima (km/h)"
+    },
+    "max_velocity_percentage": {
+      "type": "number",
+      "description": "% Vel. M\u00e1xima"
+    },
+    "meters_per_minute": {
+      "type": "number",
+      "description": "Metros por minuto"
+    }
+  },
+  "required": [
+    "date"
+  ]
+}

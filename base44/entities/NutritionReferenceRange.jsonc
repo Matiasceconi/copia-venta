@@ -1,0 +1,50 @@
+{
+  "name": "NutritionReferenceRange",
+  "type": "object",
+  "properties": {
+    "player_type": {
+      "type": "string",
+      "enum": [
+        "field",
+        "goalkeeper"
+      ],
+      "description": "Tipo de jugador al que aplica la referencia"
+    },
+    "metric_key": {
+      "type": "string",
+      "description": "M\u00e9trica nutricional evaluada, por ejemplo sumatoria_6p o porcentaje_grasa"
+    },
+    "label": {
+      "type": "string",
+      "description": "Etiqueta visible de la referencia"
+    },
+    "min_value": {
+      "type": "number",
+      "description": "Valor m\u00ednimo del rango"
+    },
+    "max_value": {
+      "type": "number",
+      "description": "Valor m\u00e1ximo del rango"
+    },
+    "color": {
+      "type": "string",
+      "default": "#22c55e",
+      "description": "Color hex de la referencia"
+    },
+    "order": {
+      "type": "number",
+      "default": 0,
+      "description": "Orden visual"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si la referencia est\u00e1 activa"
+    }
+  },
+  "required": [
+    "player_type",
+    "metric_key",
+    "label"
+  ]
+}

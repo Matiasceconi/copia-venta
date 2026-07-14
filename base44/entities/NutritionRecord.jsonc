@@ -1,0 +1,66 @@
+{
+  "name": "NutritionRecord",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre del jugador"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del registro"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Plan alimentario",
+        "Suplementaci\u00f3n",
+        "Control de peso",
+        "Hidrataci\u00f3n",
+        "Observaci\u00f3n"
+      ],
+      "description": "Tipo de registro"
+    },
+    "weight_kg": {
+      "type": "number",
+      "description": "Peso corporal (kg)"
+    },
+    "body_fat_pct": {
+      "type": "number",
+      "description": "% Grasa corporal"
+    },
+    "calories_target": {
+      "type": "number",
+      "description": "Calor\u00edas objetivo (kcal)"
+    },
+    "protein_g": {
+      "type": "number",
+      "description": "Prote\u00ednas (g)"
+    },
+    "carbs_g": {
+      "type": "number",
+      "description": "Hidratos de carbono (g)"
+    },
+    "fat_g": {
+      "type": "number",
+      "description": "Grasas (g)"
+    },
+    "supplements": {
+      "type": "string",
+      "description": "Suplementos"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notas"
+    }
+  },
+  "required": [
+    "player_name",
+    "date"
+  ]
+}

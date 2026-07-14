@@ -1,0 +1,157 @@
+{
+  "name": "MatchPlayerMinutes",
+  "type": "object",
+  "properties": {
+    "match_id": {
+      "type": "string",
+      "description": "ID del partido vinculado"
+    },
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador vinculado"
+    },
+    "match_player_key": {
+      "type": "string",
+      "description": "Clave l\u00f3gica \u00fanica match_id:player_id para evitar duplicados"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel del partido"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada del partido"
+    },
+    "competition_id": {
+      "type": "string",
+      "description": "ID de competencia del partido"
+    },
+    "competition": {
+      "type": "string",
+      "description": "Nombre de competencia del partido"
+    },
+    "tournament": {
+      "type": "string",
+      "description": "Etiqueta de torneo para reportes"
+    },
+    "match_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del partido"
+    },
+    "match_label": {
+      "type": "string",
+      "description": "Etiqueta visible del partido"
+    },
+    "rival": {
+      "type": "string",
+      "description": "Rival del partido"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre del jugador"
+    },
+    "player_number": {
+      "type": "number",
+      "description": "N\u00famero del jugador"
+    },
+    "lineup_role": {
+      "type": "string",
+      "enum": [
+        "titular",
+        "suplente"
+      ],
+      "description": "Rol del jugador en el partido"
+    },
+    "started": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si fue titular"
+    },
+    "entered": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si ingres\u00f3 al partido"
+    },
+    "entered_minute": {
+      "type": "number",
+      "description": "Minuto de ingreso convertido a n\u00famero"
+    },
+    "entered_minute_label": {
+      "type": "string",
+      "description": "Minuto de ingreso tal como fue cargado"
+    },
+    "exit_minute": {
+      "type": "number",
+      "description": "Minuto de salida convertido a n\u00famero"
+    },
+    "exit_minute_label": {
+      "type": "string",
+      "description": "Minuto de salida tal como fue cargado"
+    },
+    "match_duration_minutes": {
+      "type": "number",
+      "description": "Duraci\u00f3n total real del partido al momento de guardar"
+    },
+    "minutes_calculated": {
+      "type": "number",
+      "description": "Minutos calculados autom\u00e1ticamente"
+    },
+    "minutes_played": {
+      "type": "number",
+      "description": "Minutos finales computables para reportes"
+    },
+    "manual_override": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si se us\u00f3 correcci\u00f3n manual"
+    },
+    "manual_reason": {
+      "type": "string",
+      "description": "Motivo opcional de la correcci\u00f3n manual"
+    },
+    "source": {
+      "type": "string",
+      "default": "match_minutes_tab",
+      "description": "Origen del registro"
+    },
+    "source_file": {
+      "type": "string",
+      "description": "Archivo origen utilizado para importar minutos"
+    },
+    "data_source": {
+      "type": "string",
+      "description": "Origen de recuperaci\u00f3n o carga del dato"
+    },
+    "entry_source": {
+      "type": "string",
+      "description": "Origen del minuto de ingreso: excel, inferred_from_minutes o manual"
+    },
+    "role_normalized_from_typo": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si el rol fue normalizado desde una variante ortogr\u00e1fica"
+    },
+    "import_batch_id": {
+      "type": "string",
+      "description": "ID del lote de importaci\u00f3n para auditor\u00eda y reversi\u00f3n"
+    },
+    "imported_at": {
+      "type": "string",
+      "description": "Fecha/hora en que fue importado"
+    },
+    "import_observation": {
+      "type": "string",
+      "description": "Observaci\u00f3n conservada desde la planilla"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora l\u00f3gica de \u00faltima actualizaci\u00f3n"
+    }
+  },
+  "required": [
+    "match_id",
+    "player_id",
+    "match_player_key"
+  ]
+}

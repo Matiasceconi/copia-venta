@@ -1,0 +1,133 @@
+{
+  "name": "FieldExercise",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "ID de la sesi\u00f3n de campo"
+    },
+    "name": {
+      "type": "string",
+      "description": "Nombre del ejercicio"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Posesi\u00f3n",
+        "Pressing",
+        "Finalizaci\u00f3n",
+        "Transici\u00f3n",
+        "F\u00edsico",
+        "T\u00e1ctica",
+        "Rondo",
+        "Pelota parada",
+        "Otro"
+      ],
+      "description": "Categor\u00eda del ejercicio"
+    },
+    "type": {
+      "type": "string",
+      "description": "Tipo configurable del ejercicio"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descripci\u00f3n del ejercicio"
+    },
+    "blocks": {
+      "type": "number",
+      "description": "Cantidad de bloques / series del ejercicio"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "description": "Duraci\u00f3n de cada bloque en minutos"
+    },
+    "duration_min": {
+      "type": "number",
+      "description": "Duraci\u00f3n total del ejercicio en minutos"
+    },
+    "work_time": {
+      "type": "string",
+      "description": "Tiempo de trabajo"
+    },
+    "rest_time": {
+      "type": "string",
+      "description": "Pausa entre bloques"
+    },
+    "space": {
+      "type": "string",
+      "description": "Espacio o zona de la cancha utilizada"
+    },
+    "objective": {
+      "type": "string",
+      "description": "Objetivo t\u00e1ctico/f\u00edsico del ejercicio"
+    },
+    "width_m": {
+      "type": "number",
+      "description": "Ancho del espacio en metros"
+    },
+    "length_m": {
+      "type": "number",
+      "description": "Largo del espacio en metros"
+    },
+    "total_area": {
+      "type": "number",
+      "description": "Superficie total"
+    },
+    "eii": {
+      "type": "number",
+      "description": "Espacio de interacci\u00f3n individual"
+    },
+    "num_players": {
+      "type": "number",
+      "description": "N\u00famero de jugadores en el ejercicio"
+    },
+    "players_count": {
+      "type": "number",
+      "description": "N\u00famero de jugadores en el ejercicio"
+    },
+    "order": {
+      "type": "number",
+      "description": "Orden dentro de la sesi\u00f3n"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL de la imagen del ejercicio"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "URL del video del ejercicio"
+    },
+    "external_csv_url": {
+      "type": "string",
+      "description": "URL del CSV con carga externa del ejercicio"
+    },
+    "external_csv_label": {
+      "type": "string",
+      "description": "Nombre o descripci\u00f3n del archivo CSV cargado"
+    },
+    "external_load_summary": {
+      "type": "object",
+      "description": "Resumen de carga externa"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Etiquetas"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones"
+    },
+    "library_exercise_id": {
+      "type": "string",
+      "description": "ID del ejercicio en FieldExerciseLibrary si est\u00e1 vinculado"
+    }
+  },
+  "required": [
+    "session_id",
+    "name"
+  ]
+}

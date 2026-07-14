@@ -1,0 +1,82 @@
+{
+  "name": "MinutesRecord",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre del jugador"
+    },
+    "player_number": {
+      "type": "number",
+      "description": "N\u00famero de camiseta"
+    },
+    "match_id": {
+      "type": "string",
+      "description": "ID del partido (MatchReport) al que pertenecen estos minutos. Obligatorio para que el registro sea v\u00e1lido"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel al que pertenece el partido (desnormalizado desde MatchReport)"
+    },
+    "competition_id": {
+      "type": "string",
+      "description": "ID oficial de la competencia vinculada al partido"
+    },
+    "hidden_from_reports": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si est\u00e1 oculto de reportes/vistas por ser hist\u00f3rico sin partido v\u00e1lido"
+    },
+    "is_starter": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si el jugador fue titular en este partido. Si es false, se considera suplente"
+    },
+    "sub_in_minute": {
+      "type": "number",
+      "description": "Minuto del partido en que ingres\u00f3 (solo aplica a suplentes que ingresaron)"
+    },
+    "tournament": {
+      "type": "string",
+      "description": "Torneo o competencia",
+      "enum": [
+        "Proyecci\u00f3n Apertura",
+        "Clausura",
+        "Copa Argentina",
+        "Juveniles",
+        "Amistosos",
+        "Torneo Regional",
+        "Otro"
+      ]
+    },
+    "match_label": {
+      "type": "string",
+      "description": "Etiqueta del partido (ej: vs River 12/06)"
+    },
+    "match_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del partido"
+    },
+    "rival": {
+      "type": "string",
+      "description": "Rival del partido"
+    },
+    "minutes": {
+      "type": "number",
+      "description": "Minutos jugados en ese partido"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones"
+    }
+  },
+  "required": [
+    "player_name",
+    "tournament"
+  ]
+}

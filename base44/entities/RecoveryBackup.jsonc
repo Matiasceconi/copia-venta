@@ -1,0 +1,43 @@
+{
+  "name": "RecoveryBackup",
+  "type": "object",
+  "properties": {
+    "backup_key": {
+      "type": "string",
+      "description": "Clave \u00fanica de la copia de seguridad"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Entidad respaldada"
+    },
+    "chunk_index": {
+      "type": "number",
+      "description": "\u00cdndice del bloque respaldado"
+    },
+    "record_count": {
+      "type": "number",
+      "description": "Cantidad de registros incluidos"
+    },
+    "snapshot": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": [],
+      "description": "Copia de seguridad de registros antes de recuperaci\u00f3n"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Fecha/hora de creaci\u00f3n de la copia"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Contexto de la copia"
+    }
+  },
+  "required": [
+    "backup_key",
+    "entity_name",
+    "chunk_index"
+  ]
+}

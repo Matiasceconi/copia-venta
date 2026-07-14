@@ -1,0 +1,9 @@
+{
+  "name": "PerformancePitch",
+  "short_name": "PerformancePitch",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": []
+}

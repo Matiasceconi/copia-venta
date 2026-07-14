@@ -1,0 +1,153 @@
+{
+  "name": "FieldExerciseLibrary",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nombre del ejercicio"
+    },
+    "normalized_name": {
+      "type": "string",
+      "description": "Nombre normalizado para detectar duplicados"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "Plantel propietario (vac\u00edo si global=true)"
+    },
+    "squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel (desnormalizado)"
+    },
+    "global": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si true, visible desde cualquier plantel"
+    },
+    "type": {
+      "type": "string",
+      "description": "Tipo configurable del ejercicio"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Posesi\u00f3n",
+        "Pressing",
+        "Finalizaci\u00f3n",
+        "Transici\u00f3n",
+        "F\u00edsico",
+        "T\u00e1ctica",
+        "Rondo",
+        "Pelota parada",
+        "Otro"
+      ],
+      "description": "Categor\u00eda del ejercicio"
+    },
+    "objective": {
+      "type": "string",
+      "description": "Objetivo t\u00e1ctico/f\u00edsico"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descripci\u00f3n del ejercicio"
+    },
+    "length_m": {
+      "type": "number",
+      "description": "Largo del espacio en metros"
+    },
+    "width_m": {
+      "type": "number",
+      "description": "Ancho del espacio en metros"
+    },
+    "total_area": {
+      "type": "number",
+      "description": "Superficie total (m\u00b2)"
+    },
+    "eii": {
+      "type": "number",
+      "description": "Espacio de Interacci\u00f3n Individual (m\u00b2/jug)"
+    },
+    "players_count": {
+      "type": "number",
+      "description": "N\u00famero de jugadores"
+    },
+    "duration_min": {
+      "type": "number",
+      "description": "Duraci\u00f3n en minutos"
+    },
+    "blocks": {
+      "type": "number",
+      "description": "Cantidad de bloques"
+    },
+    "work_time": {
+      "type": "string",
+      "description": "Tiempo de trabajo"
+    },
+    "rest_time": {
+      "type": "string",
+      "description": "Pausa entre bloques"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL de imagen del ejercicio"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "URL de video del ejercicio"
+    },
+    "external_load_summary": {
+      "type": "object",
+      "description": "Resumen hist\u00f3rico calculado de carga externa del ejercicio"
+    },
+    "historical_gps_summary": {
+      "type": "object",
+      "description": "Promedios y m\u00e1ximos hist\u00f3ricos de GPS vinculados a biblioteca"
+    },
+    "last_gps_sync_at": {
+      "type": "string",
+      "description": "\u00daltima sincronizaci\u00f3n de carga externa hist\u00f3rica"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Etiquetas"
+    },
+    "favorite": {
+      "type": "boolean",
+      "default": false,
+      "description": "Marcado como favorito"
+    },
+    "author": {
+      "type": "string",
+      "description": "Autor del ejercicio"
+    },
+    "times_used": {
+      "type": "number",
+      "default": 1,
+      "description": "Veces utilizado en sesiones"
+    },
+    "last_used_at": {
+      "type": "string",
+      "format": "date",
+      "description": "\u00daltima fecha de uso"
+    },
+    "first_created_at": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de creaci\u00f3n original"
+    },
+    "created_from_session_id": {
+      "type": "string",
+      "description": "ID de la sesi\u00f3n donde se cre\u00f3 por primera vez"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

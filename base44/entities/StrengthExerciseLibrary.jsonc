@@ -1,0 +1,176 @@
+{
+  "name": "StrengthExerciseLibrary",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nombre del ejercicio"
+    },
+    "normalized_name": {
+      "type": "string",
+      "description": "Nombre normalizado para detectar duplicados"
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Nombres alternativos detectados para el mismo ejercicio"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "Plantel propietario (vac\u00edo si global=true)"
+    },
+    "squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel (desnormalizado)"
+    },
+    "global": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si true, visible desde cualquier plantel"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "Din\u00e1micos",
+        "Bal\u00edsticos",
+        "Biseries",
+        "Triseries",
+        "Contrastes",
+        "Complejos",
+        "Isom\u00e9tricos",
+        "Exc\u00e9ntricos",
+        "Preventivos",
+        "Otro"
+      ],
+      "description": "M\u00e9todo de trabajo"
+    },
+    "exercise_type": {
+      "type": "string",
+      "enum": [
+        "Esfuerzos repetidos",
+        "Esfuerzos din\u00e1micos",
+        "Antagonistas",
+        "Pliom\u00e9trico HI",
+        "S/CEA Estato/Din\u00e1mico",
+        "Potencia",
+        "Fuerza m\u00e1xima",
+        "Hipertrofia",
+        "Preventivo",
+        "Pliom\u00e9trico",
+        "Movilidad",
+        "Otro"
+      ],
+      "description": "Tipo de trabajo"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descripci\u00f3n del ejercicio"
+    },
+    "volume": {
+      "type": "string",
+      "description": "Volumen sugerido en formato libre (ej: 3x8)"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL de imagen"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "URL de video"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "Miniatura generada autom\u00e1ticamente desde el video"
+    },
+    "restore_exercise": {
+      "type": "string",
+      "description": "Ejercicio restaura"
+    },
+    "compensate_exercise": {
+      "type": "string",
+      "description": "Ejercicio compensa"
+    },
+    "sets": {
+      "type": "string",
+      "description": "Series"
+    },
+    "reps": {
+      "type": "string",
+      "description": "Repeticiones"
+    },
+    "time": {
+      "type": "string",
+      "description": "Tiempo"
+    },
+    "rest_time": {
+      "type": "string",
+      "description": "Pausa"
+    },
+    "rir": {
+      "type": "string",
+      "description": "RIR"
+    },
+    "objective": {
+      "type": "string",
+      "description": "Objetivo"
+    },
+    "muscle_group": {
+      "type": "string",
+      "description": "Grupo muscular"
+    },
+    "vector_pattern": {
+      "type": "string",
+      "description": "Patr\u00f3n vectorial"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Etiquetas"
+    },
+    "favorite": {
+      "type": "boolean",
+      "default": false,
+      "description": "Favorito"
+    },
+    "times_used": {
+      "type": "number",
+      "default": 1,
+      "description": "Veces utilizado"
+    },
+    "usage_sessions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": [],
+      "description": "Sesiones donde apareci\u00f3 el ejercicio"
+    },
+    "last_used_at": {
+      "type": "string",
+      "format": "date",
+      "description": "\u00daltima fecha de uso"
+    },
+    "first_created_at": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de creaci\u00f3n"
+    },
+    "created_from_session_id": {
+      "type": "string",
+      "description": "Sesi\u00f3n origen"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "name": "MatchReport",
+  "type": "object",
+  "properties": {
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel al que pertenece este partido"
+    },
+    "squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel (desnormalizado)"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada vinculada al plantel/competencia"
+    },
+    "calendar_event_id": {
+      "type": "string",
+      "description": "ID del evento DayEvent vinculado en Calendario"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "borrador",
+        "activo",
+        "finalizado",
+        "cancelado",
+        "archivado"
+      ],
+      "default": "activo",
+      "description": "Estado del partido. borrador = creado desde calendario con datos incompletos; archivado = oculto pero conserva hist\u00f3rico"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha calendario del partido"
+    },
+    "match_time": {
+      "type": "string",
+      "description": "Horario del partido HH:MM"
+    },
+    "match_venue": {
+      "type": "string",
+      "description": "Estadio o lugar del partido"
+    },
+    "rival": {
+      "type": "string",
+      "description": "Nombre del rival (respaldo visible)"
+    },
+    "rival_name_backup": {
+      "type": "string",
+      "description": "Nombre legado del rival conservado durante migraci\u00f3n"
+    },
+    "rival_club_id": {
+      "type": "string",
+      "description": "ID del club rival en RivalClub"
+    },
+    "competition": {
+      "type": "string",
+      "description": "Nombre legado/desnormalizado de la competencia"
+    },
+    "competition_id": {
+      "type": "string",
+      "description": "ID oficial de la competencia en Competitions"
+    },
+    "competition_stage": {
+      "type": "string",
+      "description": "Fase o instancia estructurada: Fase regular, Fase de grupos, Cuartos de final, Final, etc."
+    },
+    "competition_round": {
+      "type": "string",
+      "description": "Etiqueta textual de ronda/jornada si aplica: Fecha 1, Jornada 10, Ida, Vuelta, etc."
+    },
+    "group_name": {
+      "type": "string",
+      "description": "Grupo, zona o llave: Grupo A, Zona 1, etc."
+    },
+    "matchday_number": {
+      "type": "number",
+      "description": "N\u00famero de fecha/jornada del torneo para ordenar y filtrar"
+    },
+    "phase_label": {
+      "type": "string",
+      "description": "Etiqueta visible calculada o manual de la etapa del partido"
+    },
+    "location": {
+      "type": "string",
+      "enum": [
+        "Local",
+        "Visitante",
+        "Neutral"
+      ],
+      "description": "Condici\u00f3n de local/visitante"
+    },
+    "our_score": {
+      "type": "number",
+      "description": "Goles propios"
+    },
+    "rival_score": {
+      "type": "number",
+      "description": "Goles del rival"
+    },
+    "total_duration_minutes": {
+      "type": "number",
+      "description": "Duraci\u00f3n real total del partido, incluyendo tiempo agregado o alargue"
+    },
+    "duration_source": {
+      "type": "string",
+      "description": "Origen de la duraci\u00f3n: manual, calculated_from_max_player o default_90_requires_review"
+    },
+    "duration_calculated_at": {
+      "type": "string",
+      "description": "Fecha/hora del c\u00e1lculo autom\u00e1tico de duraci\u00f3n"
+    },
+    "duration_confirmed_at": {
+      "type": "string",
+      "description": "Fecha/hora de confirmaci\u00f3n manual de duraci\u00f3n"
+    },
+    "duration_review_status": {
+      "type": "string",
+      "description": "Estado de revisi\u00f3n de la duraci\u00f3n"
+    },
+    "duration_review_note": {
+      "type": "string",
+      "description": "Motivo de revisi\u00f3n de duraci\u00f3n"
+    },
+    "rival_formation": {
+      "type": "string",
+      "description": "Formaci\u00f3n del rival (ej: 4-3-3)"
+    },
+    "tactical_system": {
+      "type": "string",
+      "description": "Sistema t\u00e1ctico propio de la formaci\u00f3n, por ejemplo 4-2-3-1"
+    },
+    "formation_positions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": [],
+      "description": "Ubicaciones de titulares en el campo: player_id, x, y, slot_key, position_group, preferred_positions"
+    },
+    "formation_updated_at": {
+      "type": "string",
+      "description": "Fecha/hora de \u00faltima actualizaci\u00f3n de la formaci\u00f3n"
+    },
+    "captain_player_id": {
+      "type": "string",
+      "description": "ID del jugador capit\u00e1n definido en la formaci\u00f3n"
+    },
+    "rival_notes": {
+      "type": "string",
+      "description": "An\u00e1lisis general del rival"
+    },
+    "set_pieces_notes": {
+      "type": "string",
+      "description": "Pelota parada del rival"
+    },
+    "video_analysis_url": {
+      "type": "string",
+      "description": "Link YouTube an\u00e1lisis del rival"
+    },
+    "video_set_pieces_url": {
+      "type": "string",
+      "description": "Link YouTube pelota parada"
+    },
+    "video_extra_url": {
+      "type": "string",
+      "description": "Link YouTube video adicional"
+    },
+    "match_video_url": {
+      "type": "string",
+      "description": "Link YouTube / URL del video completo del partido"
+    },
+    "match_plan_pdf_url": {
+      "type": "string",
+      "description": "URL del archivo PDF del plan de partido"
+    },
+    "match_plan_pdf_label": {
+      "type": "string",
+      "description": "Nombre del archivo PDF del plan de partido"
+    },
+    "squad_called": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lista de convocados (IDs de jugadores)"
+    },
+    "squad_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Nombres de convocados (desnormalizado)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones generales"
+    },
+    "csv_url": {
+      "type": "string",
+      "description": "URL del archivo CSV GPS del partido"
+    },
+    "csv_label": {
+      "type": "string",
+      "description": "Nombre del archivo CSV cargado"
+    },
+    "rival_logo_url": {
+      "type": "string",
+      "description": "URL del escudo del rival"
+    },
+    "sync_source": {
+      "type": "string",
+      "description": "\u00daltimo origen de sincronizaci\u00f3n: calendar o matches"
+    },
+    "sync_updated_at": {
+      "type": "string",
+      "description": "\u00daltima sincronizaci\u00f3n calendario/partido"
+    }
+  },
+  "required": [
+    "rival",
+    "date"
+  ]
+}

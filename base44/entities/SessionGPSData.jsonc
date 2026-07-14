@@ -1,0 +1,156 @@
+{
+  "name": "SessionGPSData",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "ID de la sesi\u00f3n"
+    },
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador (Player)"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre oficial del jugador (desnormalizado)"
+    },
+    "player_name_original": {
+      "type": "string",
+      "description": "Nombre tal como vino en el CSV"
+    },
+    "duration": {
+      "type": "string",
+      "description": "Duraci\u00f3n total (HH:MM:SS)"
+    },
+    "total_distance": {
+      "type": "number",
+      "description": "Distancia total (m)"
+    },
+    "m_min": {
+      "type": "number",
+      "description": "Metros por minuto"
+    },
+    "distance_14_19_8": {
+      "type": "number",
+      "description": "D 14,0-19,8 km/h (m)"
+    },
+    "distance_19_8": {
+      "type": "number",
+      "description": "Distancia D 19,8-25,0 km/h (m)"
+    },
+    "distance_25": {
+      "type": "number",
+      "description": "Distancia D+ 25,0 km/h (m)"
+    },
+    "sprints": {
+      "type": "number",
+      "description": "Sprint Efforts"
+    },
+    "acc_2_3_distance": {
+      "type": "number",
+      "description": "Acc 2-3 Mts/s distancia (m)"
+    },
+    "acc_2_3_eff": {
+      "type": "number",
+      "description": "Acc 2-3 Mts/s Eff"
+    },
+    "acc_3_distance": {
+      "type": "number",
+      "description": "Acc + 3mt/s distancia (m)"
+    },
+    "acc_3": {
+      "type": "number",
+      "description": "Acc + 3mt/s eff"
+    },
+    "dec_2_3_distance": {
+      "type": "number",
+      "description": "Dec 2-3 mts/s distancia (m)"
+    },
+    "dec_2_3_eff": {
+      "type": "number",
+      "description": "Dec 2-3 mts/s Eff"
+    },
+    "dec_3_distance": {
+      "type": "number",
+      "description": "Dec +3mts/s distancia (m)"
+    },
+    "dec_3": {
+      "type": "number",
+      "description": "Dec +3mts/s Eff"
+    },
+    "hmld": {
+      "type": "number",
+      "description": "H Meta Load D (m)"
+    },
+    "player_load": {
+      "type": "number",
+      "description": "Total Player Load"
+    },
+    "player_load_per_min": {
+      "type": "number",
+      "description": "Player Load Per Minute"
+    },
+    "rhie_bouts": {
+      "type": "number",
+      "description": "RHIE Total Bouts"
+    },
+    "smax": {
+      "type": "number",
+      "description": "Maximum Velocity (km/h)"
+    },
+    "max_vel_percent": {
+      "type": "number",
+      "description": "Max Vel (% Max)"
+    },
+    "extra_metrics": {
+      "type": "object",
+      "description": "Columnas adicionales detectadas en el CSV que no tienen un campo dedicado (clave: nombre de columna, valor: dato)"
+    },
+    "source_file": {
+      "type": "string",
+      "description": "Nombre del archivo CSV origen"
+    },
+    "include_in_session_average": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si el registro se incluye en el promedio del grupo principal de la sesi\u00f3n"
+    },
+    "gps_group": {
+      "type": "string",
+      "enum": [
+        "principal",
+        "diferenciado",
+        "kinesiologia",
+        "arqueros",
+        "reintegro",
+        "individual",
+        "otro"
+      ],
+      "default": "principal",
+      "description": "Grupo al que pertenece el jugador en esta sesi\u00f3n (para promedios)"
+    },
+    "exclusion_reason": {
+      "type": "string",
+      "enum": [
+        "diferenciado",
+        "kinesiologia",
+        "reintegro",
+        "lesion",
+        "arquero",
+        "carga_parcial",
+        "error_gps",
+        "otro"
+      ],
+      "description": "Motivo por el cual el jugador fue excluido del promedio principal"
+    },
+    "visible_in_report": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si el jugador aparece en el detalle de los reportes"
+    }
+  },
+  "required": [
+    "session_id",
+    "player_id"
+  ]
+}

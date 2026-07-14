@@ -1,0 +1,59 @@
+{
+  "name": "SessionVideoLink",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "ID de la sesi\u00f3n (TrainingSession) a la que pertenece este link"
+    },
+    "exercise_id": {
+      "type": "string",
+      "description": "ID del SessionExercise asociado (opcional, si el link corresponde a un ejercicio espec\u00edfico)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Nombre del video"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "Link del video (ej: link de descarga de Hudl, YouTube, Drive, Vimeo)"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "Hudl",
+        "YouTube",
+        "Google Drive",
+        "Vimeo",
+        "Otro"
+      ],
+      "default": "Hudl",
+      "description": "Origen del video"
+    },
+    "video_type": {
+      "type": "string",
+      "enum": [
+        "Sesi\u00f3n completa",
+        "Ejercicio",
+        "Fuerza",
+        "An\u00e1lisis",
+        "Clip"
+      ],
+      "default": "Sesi\u00f3n completa",
+      "description": "Tipo de video"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones sobre el video"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Nombre de quien carg\u00f3 el link (desnormalizado)"
+    }
+  },
+  "required": [
+    "session_id",
+    "title",
+    "video_url"
+  ]
+}

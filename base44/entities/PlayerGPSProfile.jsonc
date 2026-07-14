@@ -1,0 +1,99 @@
+{
+  "name": "PlayerGPSProfile",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador (perfil \u00fanico, no depende del plantel)"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "Plantel actual del jugador (informativo)"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada (informativo)"
+    },
+    "total_sessions": {
+      "type": "number",
+      "description": "Sesiones normales con GPS usadas en los promedios"
+    },
+    "avg_total_distance": {
+      "type": "number",
+      "description": "Distancia total promedio (m)"
+    },
+    "avg_m_min": {
+      "type": "number",
+      "description": "Metros por minuto promedio"
+    },
+    "avg_distance_19_8": {
+      "type": "number",
+      "description": "D 19,8-25,0 km/h promedio (m)"
+    },
+    "avg_distance_25": {
+      "type": "number",
+      "description": "D+ 25,0 km/h promedio (m)"
+    },
+    "avg_sprints": {
+      "type": "number",
+      "description": "Sprint Efforts promedio"
+    },
+    "avg_acc_3": {
+      "type": "number",
+      "description": "Acc +3mt/s promedio"
+    },
+    "avg_dec_3": {
+      "type": "number",
+      "description": "Dec +3mt/s promedio"
+    },
+    "avg_player_load": {
+      "type": "number",
+      "description": "Player Load promedio"
+    },
+    "avg_pl_min": {
+      "type": "number",
+      "description": "Player Load promedio por minuto"
+    },
+    "avg_rhie": {
+      "type": "number",
+      "description": "RHIE promedio (si existen datos)"
+    },
+    "max_smax": {
+      "type": "number",
+      "description": "Velocidad m\u00e1xima hist\u00f3rica (km/h)"
+    },
+    "load_7d": {
+      "type": "number",
+      "description": "Distancia acumulada \u00faltimos 7 d\u00edas (m)"
+    },
+    "load_14d": {
+      "type": "number",
+      "description": "Distancia acumulada \u00faltimos 14 d\u00edas (m)"
+    },
+    "load_28d": {
+      "type": "number",
+      "description": "Distancia acumulada \u00faltimos 28 d\u00edas (m)"
+    },
+    "weekly_avg": {
+      "type": "number",
+      "description": "Promedio hist\u00f3rico de carga semanal (m)"
+    },
+    "trend": {
+      "type": "string",
+      "enum": [
+        "subiendo",
+        "bajando",
+        "estable"
+      ],
+      "default": "estable",
+      "description": "Tendencia de carga reciente"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora del \u00faltimo rec\u00e1lculo (ISO)"
+    }
+  },
+  "required": [
+    "player_id"
+  ]
+}

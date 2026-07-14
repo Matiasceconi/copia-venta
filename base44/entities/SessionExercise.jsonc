@@ -1,0 +1,99 @@
+{
+  "name": "SessionExercise",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "ID de la sesi\u00f3n (TrainingSession)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Nombre del ejercicio"
+    },
+    "order": {
+      "type": "number",
+      "description": "Orden dentro de la sesi\u00f3n",
+      "default": 0
+    },
+    "type": {
+      "type": "string",
+      "description": "Tipo configurable del ejercicio"
+    },
+    "duration_min": {
+      "type": "number",
+      "description": "Duraci\u00f3n total (minutos)"
+    },
+    "blocks": {
+      "type": "number",
+      "description": "Cantidad de bloques"
+    },
+    "work_time": {
+      "type": "string",
+      "description": "Tiempo de trabajo (ej: 4 min)"
+    },
+    "rest_time": {
+      "type": "string",
+      "description": "Pausa entre bloques (ej: 2 min)"
+    },
+    "length_m": {
+      "type": "number",
+      "description": "Largo del espacio en metros"
+    },
+    "width_m": {
+      "type": "number",
+      "description": "Ancho del espacio en metros"
+    },
+    "players_count": {
+      "type": "number",
+      "description": "N\u00famero de jugadores"
+    },
+    "total_area": {
+      "type": "number",
+      "description": "Superficie total (largo x ancho)"
+    },
+    "eii": {
+      "type": "number",
+      "description": "Espacio de Interacci\u00f3n Individual (total_area / players_count)"
+    },
+    "objective": {
+      "type": "string",
+      "description": "Objetivo del ejercicio"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descripci\u00f3n del ejercicio"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL de imagen o dibujo del ejercicio"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "Link al video del ejercicio"
+    },
+    "external_load_summary": {
+      "type": "object",
+      "description": "Resumen de carga externa del ejercicio de sesi\u00f3n"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Etiquetas"
+    },
+    "library_exercise_id": {
+      "type": "string",
+      "description": "ID del ejercicio en FieldExerciseLibrary (si est\u00e1 vinculado)"
+    }
+  },
+  "required": [
+    "session_id",
+    "name"
+  ]
+}

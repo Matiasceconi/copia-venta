@@ -1,0 +1,69 @@
+{
+  "name": "StaffAccess",
+  "type": "object",
+  "properties": {
+    "staff_id": {
+      "type": "string",
+      "description": "ID del StaffMember"
+    },
+    "staff_name": {
+      "type": "string",
+      "description": "Nombre del staff (desnormalizado)"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email del usuario de la app"
+    },
+    "role_access": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "editor",
+        "lectura",
+        "restringido"
+      ],
+      "default": "lectura",
+      "description": "Nivel de acceso general"
+    },
+    "allowed_squads": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "IDs de planteles a los que tiene acceso"
+    },
+    "allowed_modules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "M\u00f3dulos habilitados"
+    },
+    "can_create": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_edit": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_delete": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_export": {
+      "type": "boolean",
+      "default": false
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "staff_id",
+    "user_email"
+  ]
+}

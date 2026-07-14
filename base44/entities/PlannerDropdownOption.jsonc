@@ -1,0 +1,28 @@
+{
+  "name": "PlannerDropdownOption",
+  "type": "object",
+  "properties": {
+    "group": {
+      "type": "string",
+      "description": "Grupo de lista desplegable del planificador, por ejemplo cooldown"
+    },
+    "label": {
+      "type": "string",
+      "description": "Texto visible de la opci\u00f3n"
+    },
+    "order": {
+      "type": "number",
+      "default": 0,
+      "description": "Orden de aparici\u00f3n"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si la opci\u00f3n est\u00e1 disponible"
+    }
+  },
+  "required": [
+    "group",
+    "label"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "name": "RivalClub",
+  "type": "object",
+  "properties": {
+    "official_name": {
+      "type": "string",
+      "description": "Nombre oficial del club"
+    },
+    "short_name": {
+      "type": "string",
+      "description": "Nombre corto visible"
+    },
+    "normalized_name": {
+      "type": "string",
+      "description": "Nombre normalizado para evitar duplicados"
+    },
+    "shield_url": {
+      "type": "string",
+      "description": "URL \u00fanica del escudo del club"
+    },
+    "country": {
+      "type": "string",
+      "description": "Pa\u00eds"
+    },
+    "region": {
+      "type": "string",
+      "description": "Provincia o regi\u00f3n"
+    },
+    "usual_competition": {
+      "type": "string",
+      "description": "Competencia habitual"
+    },
+    "primary_colors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Colores principales del club"
+    },
+    "stadium": {
+      "type": "string",
+      "description": "Estadio habitual"
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Alias o nombres alternativos"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si el club est\u00e1 activo para selecci\u00f3n"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Fecha/hora l\u00f3gica de creaci\u00f3n"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora l\u00f3gica de actualizaci\u00f3n"
+    }
+  },
+  "required": [
+    "official_name"
+  ]
+}

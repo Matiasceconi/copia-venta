@@ -1,0 +1,73 @@
+{
+  "name": "AppRole",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nombre del rol (ej: DT, Preparador F\u00edsico, M\u00e9dico)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descripci\u00f3n del rol"
+    },
+    "areas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "\u00c1reas organizativas asociadas al rol. No determinan la navegaci\u00f3n por m\u00f3dulos."
+    },
+    "allowed_pages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Rutas visibles derivadas de los m\u00f3dulos con permiso Ver; se conserva por compatibilidad."
+    },
+    "module_permissions": {
+      "type": "object",
+      "default": {},
+      "description": "Permisos independientes por m\u00f3dulo: module_id -> {can_view, can_create, can_edit, can_delete, can_export, can_admin}"
+    },
+    "can_view": {
+      "type": "boolean",
+      "default": true,
+      "description": "Permiso global legado: puede ver p\u00e1ginas asignadas"
+    },
+    "can_create": {
+      "type": "boolean",
+      "default": false,
+      "description": "Permiso global legado: puede crear registros"
+    },
+    "can_edit": {
+      "type": "boolean",
+      "default": false,
+      "description": "Permiso global legado: puede editar registros"
+    },
+    "can_delete": {
+      "type": "boolean",
+      "default": false,
+      "description": "Permiso global legado: puede eliminar registros"
+    },
+    "can_export": {
+      "type": "boolean",
+      "default": false,
+      "description": "Permiso global legado: puede exportar datos/reportes"
+    },
+    "can_admin": {
+      "type": "boolean",
+      "default": false,
+      "description": "Acceso total de administrador a todos los m\u00f3dulos"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Rol activo/disponible para asignar"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

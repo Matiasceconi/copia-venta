@@ -1,0 +1,57 @@
+{
+  "name": "SquadMembership",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador (relaci\u00f3n con Player)"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre del jugador (desnormalizado)"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel (relaci\u00f3n con Squad)"
+    },
+    "squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel (desnormalizado)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "activo",
+        "fuera_del_plantel",
+        "sube",
+        "baja",
+        "pr\u00e9stamo",
+        "inactivo"
+      ],
+      "default": "activo",
+      "description": "Estado de la membres\u00eda"
+    },
+    "effective_from": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de inicio de la membres\u00eda"
+    },
+    "effective_to": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de fin de la membres\u00eda (vac\u00edo = vigente)"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Motivo del movimiento (ej: ascenso, pr\u00e9stamo, lesi\u00f3n)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones adicionales"
+    }
+  },
+  "required": [
+    "player_id",
+    "squad_id"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Squad",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nombre del plantel (ej: Reserva, Cuarta, Primera)"
+    },
+    "category": {
+      "type": "string",
+      "description": "Categor\u00eda (ej: 2006, Sub-20)"
+    },
+    "season": {
+      "type": "string",
+      "description": "Temporada (ej: 2025, 2025/2026)"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si el plantel est\u00e1 activo"
+    },
+    "staff": {
+      "type": "string",
+      "description": "Cuerpo t\u00e9cnico (texto libre)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

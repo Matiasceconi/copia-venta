@@ -1,0 +1,41 @@
+{
+  "name": "NutritionSyncState",
+  "type": "object",
+  "properties": {
+    "source_file_id": {
+      "type": "string",
+      "description": "Archivo original en Google Drive"
+    },
+    "source_file_name": {
+      "type": "string",
+      "description": "Nombre del archivo original"
+    },
+    "source_mime_type": {
+      "type": "string",
+      "description": "MIME type del archivo original"
+    },
+    "source_modified_time": {
+      "type": "string",
+      "description": "\u00daltima modificaci\u00f3n detectada en Drive"
+    },
+    "native_spreadsheet_id": {
+      "type": "string",
+      "description": "Copia convertida a Google Sheets nativo si existe"
+    },
+    "native_spreadsheet_url": {
+      "type": "string",
+      "description": "URL de la copia nativa"
+    },
+    "last_synced_at": {
+      "type": "string",
+      "description": "\u00daltima sincronizaci\u00f3n"
+    },
+    "last_sync_result": {
+      "type": "object",
+      "description": "Resumen de la \u00faltima sincronizaci\u00f3n"
+    }
+  },
+  "required": [
+    "source_file_id"
+  ]
+}

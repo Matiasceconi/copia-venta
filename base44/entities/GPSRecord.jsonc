@@ -1,0 +1,63 @@
+{
+  "name": "GPSRecord",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre del jugador"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del registro"
+    },
+    "session_label": {
+      "type": "string",
+      "description": "Etiqueta de sesi\u00f3n"
+    },
+    "total_distance": {
+      "type": "number",
+      "description": "Distancia total (m)"
+    },
+    "max_speed": {
+      "type": "number",
+      "description": "Velocidad m\u00e1xima (km/h)"
+    },
+    "high_speed_running": {
+      "type": "number",
+      "description": "Alta velocidad (m)"
+    },
+    "sprint_distance": {
+      "type": "number",
+      "description": "Sprint (m)"
+    },
+    "accelerations": {
+      "type": "number",
+      "description": "Aceleraciones"
+    },
+    "decelerations": {
+      "type": "number",
+      "description": "Desaceleraciones"
+    },
+    "player_load": {
+      "type": "number",
+      "description": "Player Load"
+    },
+    "heart_rate_avg": {
+      "type": "number",
+      "description": "FC promedio (bpm)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notas"
+    }
+  },
+  "required": [
+    "player_name",
+    "date"
+  ]
+}

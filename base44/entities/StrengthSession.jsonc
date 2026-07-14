@@ -1,0 +1,56 @@
+{
+  "name": "StrengthSession",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "T\u00edtulo de la sesi\u00f3n de fuerza"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de la sesi\u00f3n"
+    },
+    "match_day_code": {
+      "type": "string",
+      "enum": [
+        "MD",
+        "MD-1",
+        "MD-2",
+        "MD-3",
+        "MD-4",
+        "MD-5",
+        "MD-6",
+        "MD+1",
+        "MD+2"
+      ],
+      "description": "C\u00f3digo de d\u00eda relativo al partido"
+    },
+    "intensity": {
+      "type": "string",
+      "enum": [
+        "Baja",
+        "Media",
+        "Alta",
+        "Muy alta"
+      ],
+      "description": "Intensidad general"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "description": "Duraci\u00f3n en minutos"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones generales"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Link de imagen de la sesi\u00f3n"
+    }
+  },
+  "required": [
+    "title",
+    "date"
+  ]
+}

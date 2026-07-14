@@ -1,0 +1,37 @@
+{
+  "name": "SessionGPSSummary",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "ID de la sesi\u00f3n (TrainingSession)"
+    },
+    "source_file": {
+      "type": "string",
+      "description": "Nombre del archivo CSV origen"
+    },
+    "total_distance": {
+      "type": "number",
+      "description": "Distancia total del equipo (m)"
+    },
+    "avg_distance": {
+      "type": "number",
+      "description": "Distancia promedio por jugador (m)"
+    },
+    "avg_m_min": {
+      "type": "number",
+      "description": "Metros por minuto promedio"
+    },
+    "avg_player_load": {
+      "type": "number",
+      "description": "Player Load promedio"
+    },
+    "max_speed": {
+      "type": "number",
+      "description": "Velocidad m\u00e1xima del equipo (km/h)"
+    }
+  },
+  "required": [
+    "session_id"
+  ]
+}

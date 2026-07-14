@@ -1,0 +1,46 @@
+{
+  "name": "PlayerAlias",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador en Players (relaci\u00f3n obligatoria)"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre oficial del jugador (desnormalizado para referencia)"
+    },
+    "alias_name": {
+      "type": "string",
+      "description": "Nombre original tal como viene en el CSV/GPS/fuente externa"
+    },
+    "normalized_alias": {
+      "type": "string",
+      "description": "Alias normalizado: min\u00fasculas, sin tildes, sin comas, sin puntos, sin espacios dobles"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "Catapult",
+        "CSV GPS",
+        "Wellness",
+        "Minutos",
+        "Nutrici\u00f3n",
+        "Manual",
+        "Excel",
+        "Otro"
+      ],
+      "default": "Manual",
+      "description": "Fuente de origen del alias"
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "Confianza del match autom\u00e1tico (0-1). 1 = exacto, <0.9 = requiere revisi\u00f3n manual"
+    }
+  },
+  "required": [
+    "player_id",
+    "alias_name",
+    "normalized_alias"
+  ]
+}

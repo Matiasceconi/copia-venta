@@ -1,0 +1,73 @@
+{
+  "name": "TournamentStanding",
+  "type": "object",
+  "properties": {
+    "position": {
+      "type": "number",
+      "description": "Posici\u00f3n en la tabla"
+    },
+    "team_name": {
+      "type": "string",
+      "description": "Nombre del equipo"
+    },
+    "team_logo_url": {
+      "type": "string",
+      "description": "URL del escudo del equipo"
+    },
+    "matches_played": {
+      "type": "number",
+      "description": "Partidos jugados"
+    },
+    "wins": {
+      "type": "number",
+      "description": "Partidos ganados"
+    },
+    "draws": {
+      "type": "number",
+      "description": "Partidos empatados"
+    },
+    "losses": {
+      "type": "number",
+      "description": "Partidos perdidos"
+    },
+    "goals_for": {
+      "type": "number",
+      "description": "Goles a favor"
+    },
+    "goals_against": {
+      "type": "number",
+      "description": "Goles en contra"
+    },
+    "points": {
+      "type": "number",
+      "description": "Puntos totales"
+    },
+    "tournament": {
+      "type": "string",
+      "description": "Nombre del torneo",
+      "default": "Proyecci\u00f3n Apertura"
+    },
+    "group": {
+      "type": "string",
+      "enum": [
+        "Zona A",
+        "Zona B",
+        "Tabla Anual",
+        "General"
+      ],
+      "description": "Grupo o zona del torneo",
+      "default": "General"
+    }
+  },
+  "required": [
+    "position",
+    "team_name",
+    "matches_played",
+    "wins",
+    "draws",
+    "losses",
+    "goals_for",
+    "goals_against",
+    "points"
+  ]
+}

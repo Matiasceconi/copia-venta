@@ -1,0 +1,71 @@
+{
+  "name": "SessionPlayer",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "ID de la sesi\u00f3n (TrainingSession)"
+    },
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre del jugador (desnormalizado)"
+    },
+    "position": {
+      "type": "string",
+      "description": "Posici\u00f3n del jugador (desnormalizado)"
+    },
+    "squad_name": {
+      "type": "string",
+      "description": "Plantel base del jugador (desnormalizado)"
+    },
+    "status_at_session": {
+      "type": "string",
+      "enum": [
+        "disponible",
+        "diferenciado",
+        "lesionado",
+        "molestia",
+        "ausente",
+        "sube_a_reserva",
+        "baj\u00f3",
+        "subi\u00f3",
+        "convocado",
+        "suspendido",
+        "reintegro"
+      ],
+      "description": "Estado del jugador seg\u00fan DailySquadStatus al momento de la sesi\u00f3n"
+    },
+    "attendance": {
+      "type": "string",
+      "enum": [
+        "presente",
+        "ausente",
+        "diferenciado",
+        "kinesiologia",
+        "no_entrena"
+      ],
+      "default": "presente",
+      "description": "Asistencia real a la sesi\u00f3n. 'kinesiologia' = estuvo presente pero trabaj\u00f3 con el \u00e1rea m\u00e9dica/kinesiolog\u00eda, no cuenta como presente en campo ni como ausente"
+    },
+    "minutes": {
+      "type": "number",
+      "description": "Minutos de entrenamiento"
+    },
+    "rpe": {
+      "type": "number",
+      "description": "Percepci\u00f3n del esfuerzo (1-10)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones individuales"
+    }
+  },
+  "required": [
+    "session_id",
+    "player_id"
+  ]
+}

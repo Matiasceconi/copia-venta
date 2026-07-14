@@ -1,0 +1,177 @@
+{
+  "name": "NutritionInterpretation",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador vinculado en Players"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada"
+    },
+    "source_sheet_name": {
+      "type": "string",
+      "description": "Hoja origen l\u00f3gica: Informe 1 (Lectura)"
+    },
+    "source_sheet_row_id": {
+      "type": "string",
+      "description": "Fila origen de la planilla"
+    },
+    "source_row_number": {
+      "type": "number",
+      "description": "N\u00famero de fila de origen"
+    },
+    "player_name_original": {
+      "type": "string",
+      "description": "Nombre del jugador tal como figura en la hoja de lectura"
+    },
+    "normalized_player_name": {
+      "type": "string",
+      "description": "Nombre normalizado usado para vinculaci\u00f3n"
+    },
+    "fecha": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de evaluaci\u00f3n tomada del per\u00edodo de lectura"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date",
+      "description": "Inicio del per\u00edodo le\u00eddo en la hoja"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date",
+      "description": "Fin del per\u00edodo le\u00eddo en la hoja"
+    },
+    "position_label": {
+      "type": "string",
+      "description": "Etiqueta posicional de la hoja: ARQ, C, LAT, DEF, OFE, EXT, DC"
+    },
+    "peso": {
+      "type": "number",
+      "description": "Peso en la lectura"
+    },
+    "limite_mm": {
+      "type": "number",
+      "description": "L\u00edmite objetivo en mil\u00edmetros"
+    },
+    "triceps": {
+      "type": "number",
+      "description": "Pliegue tr\u00edceps"
+    },
+    "subescapular": {
+      "type": "number",
+      "description": "Pliegue subescapular"
+    },
+    "supraespinal": {
+      "type": "number",
+      "description": "Pliegue supraespinal"
+    },
+    "abdominal": {
+      "type": "number",
+      "description": "Pliegue abdominal"
+    },
+    "muslo": {
+      "type": "number",
+      "description": "Pliegue muslo"
+    },
+    "pantorrilla": {
+      "type": "number",
+      "description": "Pliegue pantorrilla"
+    },
+    "sumatoria_6p": {
+      "type": "number",
+      "description": "Sumatoria actual de 6 pliegues"
+    },
+    "second_cut_sumatoria_6p": {
+      "type": "number",
+      "description": "Sumatoria del segundo corte si existe"
+    },
+    "cut_difference": {
+      "type": "number",
+      "description": "Diferencia entre cortes"
+    },
+    "interpretation_note": {
+      "type": "string",
+      "description": "Texto interpretativo de la hoja"
+    },
+    "nutrition_interpretation_key": {
+      "type": "string",
+      "description": "Clave \u00fanica: player_id + fecha + informe_1_lectura"
+    },
+    "nutrition_assessment_key": {
+      "type": "string",
+      "description": "Clave de evaluaci\u00f3n antropom\u00e9trica relacionada por player_id y fecha"
+    },
+    "linked": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si est\u00e1 vinculado a un jugador oficial"
+    },
+    "source_file_id": {
+      "type": "string",
+      "description": "ID del archivo origen en Drive"
+    },
+    "source_file_mime_type": {
+      "type": "string",
+      "description": "Tipo de archivo origen"
+    },
+    "row_hash": {
+      "type": "string",
+      "description": "Firma de la fila para auditor\u00eda"
+    },
+    "raw_values": {
+      "type": "object",
+      "description": "Valores originales de la fila interpretada"
+    },
+    "found_in_last_sync": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si la fila apareci\u00f3 en la \u00faltima sincronizaci\u00f3n"
+    },
+    "last_synced_at": {
+      "type": "string",
+      "description": "\u00daltima sincronizaci\u00f3n"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Fecha/hora de creaci\u00f3n l\u00f3gica"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora de \u00faltima actualizaci\u00f3n l\u00f3gica"
+    },
+    "reading_status_id": {
+      "type": "string",
+      "description": "ID del estado de lectura nutricional (NutritionReadingStatus)"
+    },
+    "observation": {
+      "type": "string",
+      "description": "Observaci\u00f3n libre sobre la lectura nutricional"
+    },
+    "responsible_user_id": {
+      "type": "string",
+      "description": "ID del usuario responsable de la lectura"
+    },
+    "next_control_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del pr\u00f3ximo control nutricional"
+    },
+    "nutrition_assessment_id": {
+      "type": "string",
+      "description": "ID directo de la evaluaci\u00f3n antropom\u00e9trica vinculada (NutritionAssessment)"
+    }
+  },
+  "required": [
+    "player_id",
+    "player_name_original",
+    "fecha"
+  ]
+}

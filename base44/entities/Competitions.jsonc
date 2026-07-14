@@ -1,0 +1,113 @@
+{
+  "name": "Competitions",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nombre oficial de la competencia"
+    },
+    "short_name": {
+      "type": "string",
+      "description": "Nombre corto visible"
+    },
+    "normalized_name": {
+      "type": "string",
+      "description": "Nombre normalizado para b\u00fasqueda"
+    },
+    "category": {
+      "type": "string",
+      "description": "Categor\u00eda deportiva o administrativa"
+    },
+    "organizer": {
+      "type": "string",
+      "description": "Organizador de la competencia"
+    },
+    "competition_type": {
+      "type": "string",
+      "enum": [
+        "liga",
+        "copa",
+        "torneo",
+        "amistoso",
+        "juveniles",
+        "otro"
+      ],
+      "default": "torneo",
+      "description": "Tipo de competencia"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada vinculada"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "Plantel vinculado"
+    },
+    "country": {
+      "type": "string",
+      "description": "Pa\u00eds"
+    },
+    "division": {
+      "type": "string",
+      "description": "Divisi\u00f3n"
+    },
+    "age_category": {
+      "type": "string",
+      "description": "Categor\u00eda de edad"
+    },
+    "official": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si es competencia oficial"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si est\u00e1 activa"
+    },
+    "color": {
+      "type": "string",
+      "default": "#F0C800",
+      "description": "Color visual"
+    },
+    "logo": {
+      "type": "string",
+      "description": "URL del logo"
+    },
+    "phase_config": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": [],
+      "description": "Fases configuradas: {name, order, uses_matchday, is_knockout, matchday_start, matchday_end}"
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Grupos o zonas disponibles"
+    },
+    "matchday_count": {
+      "type": "number",
+      "description": "Cantidad total de fechas/jornadas si aplica"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descripci\u00f3n"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Fecha/hora l\u00f3gica de creaci\u00f3n"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora l\u00f3gica de actualizaci\u00f3n"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

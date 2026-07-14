@@ -1,0 +1,30 @@
+{
+  "name": "NutritionReadingStatus",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nombre del estado (ej: Óptimo, A mejorar, Prioritario)"
+    },
+    "color": {
+      "type": "string",
+      "description": "Color hex del badge (ej: #16a34a)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descripción del estado nutricional"
+    },
+    "order": {
+      "type": "number",
+      "description": "Orden de visualización en la interfaz"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si el estado está activo y disponible para asignar"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

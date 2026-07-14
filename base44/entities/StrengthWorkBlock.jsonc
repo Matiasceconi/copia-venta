@@ -1,0 +1,50 @@
+{
+  "name": "StrengthWorkBlock",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "ID de la TrainingSession"
+    },
+    "name": {
+      "type": "string",
+      "description": "Nombre libre del cuadro de trabajo"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descripci\u00f3n o criterio metodol\u00f3gico del cuadro"
+    },
+    "estimated_time": {
+      "type": "string",
+      "description": "Tiempo estimado manual del cuadro de trabajo"
+    },
+    "color": {
+      "type": "string",
+      "default": "#22c55e",
+      "description": "Color visual del cuadro"
+    },
+    "icon": {
+      "type": "string",
+      "default": "dumbbell",
+      "description": "Icono visual del cuadro"
+    },
+    "order": {
+      "type": "number",
+      "default": 0,
+      "description": "Orden del cuadro dentro de la sesi\u00f3n"
+    },
+    "hidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si true, el cuadro queda oculto temporalmente"
+    },
+    "template_key": {
+      "type": "string",
+      "description": "Clave de plantilla si fue creado desde una plantilla r\u00e1pida"
+    }
+  },
+  "required": [
+    "session_id",
+    "name"
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "name": "DailySquadStatus",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del estado diario"
+    },
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador (relaci\u00f3n obligatoria con Players)"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre del jugador (desnormalizado)"
+    },
+    "base_squad_id": {
+      "type": "string",
+      "description": "Plantel al que pertenece originalmente el jugador (de SquadMembership)"
+    },
+    "base_squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel base (desnormalizado)"
+    },
+    "target_squad_id": {
+      "type": "string",
+      "description": "Plantel donde aparece el jugador ese d\u00eda (puede ser diferente al base)"
+    },
+    "target_squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel destino (desnormalizado)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "disponible",
+        "lesionado",
+        "molestia",
+        "suspendido",
+        "reintegro",
+        "baj\u00f3",
+        "subi\u00f3",
+        "convocado",
+        "ausente",
+        "descanso",
+        "diferenciado"
+      ],
+      "default": "disponible",
+      "description": "Estado del jugador en el d\u00eda"
+    },
+    "movement_type": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "sube_temporal",
+        "baja_temporal",
+        "fuera_temporal",
+        "reintegro"
+      ],
+      "default": "normal",
+      "description": "Tipo de movimiento del d\u00eda"
+    },
+    "movement_status": {
+      "type": "string",
+      "enum": [
+        "activo",
+        "finalizado"
+      ],
+      "default": "activo",
+      "description": "Estado del movimiento temporal. 'finalizado' significa que ya no debe considerarse activo en ning\u00fan tablero, aunque siga copi\u00e1ndose como hist\u00f3rico"
+    },
+    "temporary": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si el movimiento es temporal (no modifica SquadMembership)"
+    },
+    "active_in_target_squad": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si el jugador est\u00e1 activo en el plantel destino ese d\u00eda"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha hasta la que aplica el movimiento temporal (vac\u00edo = hasta cierre manual)"
+    },
+    "category": {
+      "type": "string",
+      "description": "Categor\u00eda del jugador"
+    },
+    "position": {
+      "type": "string",
+      "description": "Posici\u00f3n del jugador"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Etiquetas del d\u00eda",
+      "default": []
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones del d\u00eda"
+    },
+    "updated_by": {
+      "type": "string",
+      "description": "Usuario que actualiz\u00f3 el estado"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha y hora de \u00faltima actualizaci\u00f3n"
+    }
+  },
+  "required": [
+    "date",
+    "player_id"
+  ]
+}

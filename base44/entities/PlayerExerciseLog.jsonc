@@ -1,0 +1,47 @@
+{
+  "name": "PlayerExerciseLog",
+  "type": "object",
+  "properties": {
+    "exercise_id": {
+      "type": "string",
+      "description": "ID del ejercicio"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "ID de la sesi\u00f3n"
+    },
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Nombre del jugador (desnormalizado)"
+    },
+    "participated": {
+      "type": "boolean",
+      "description": "Si el jugador particip\u00f3 en el ejercicio",
+      "default": true
+    },
+    "performance": {
+      "type": "string",
+      "enum": [
+        "Muy bien",
+        "Bien",
+        "Regular",
+        "Mal"
+      ],
+      "description": "Rendimiento del jugador en el ejercicio"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones individuales del jugador en este ejercicio"
+    }
+  },
+  "required": [
+    "exercise_id",
+    "session_id",
+    "player_id",
+    "player_name"
+  ]
+}

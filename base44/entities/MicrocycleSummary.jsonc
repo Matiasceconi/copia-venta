@@ -1,0 +1,238 @@
+{
+  "name": "MicrocycleSummary",
+  "type": "object",
+  "properties": {
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel"
+    },
+    "squad_name": {
+      "type": "string",
+      "description": "Nombre del plantel"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada"
+    },
+    "microcycle_number": {
+      "type": "number",
+      "description": "N\u00famero secuencial del microciclo dentro de la temporada"
+    },
+    "version_number": {
+      "type": "number",
+      "default": 1,
+      "description": "N\u00famero de versi\u00f3n hist\u00f3rica del microciclo"
+    },
+    "microcycle_name": {
+      "type": "string",
+      "description": "Nombre del microciclo (compatibilidad)"
+    },
+    "nombre_microciclo": {
+      "type": "string",
+      "description": "Nombre visible del microciclo"
+    },
+    "fecha_inicio": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de inicio"
+    },
+    "fecha_fin": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de cierre"
+    },
+    "rival": {
+      "type": "string",
+      "description": "Rival principal de la semana"
+    },
+    "partido_asociado": {
+      "type": "string",
+      "description": "Partido asociado al microciclo"
+    },
+    "resultado": {
+      "type": "string",
+      "description": "Resultado si existe"
+    },
+    "competencia": {
+      "type": "string",
+      "description": "Competencia principal"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Etiquetas del microciclo"
+    },
+    "cantidad_sesiones": {
+      "type": "number",
+      "description": "Cantidad de sesiones con GPS v\u00e1lido"
+    },
+    "cantidad_partidos": {
+      "type": "number",
+      "description": "Cantidad de partidos"
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "borrador",
+        "en_curso",
+        "finalizado",
+        "archivado",
+        "abierto",
+        "cerrado",
+        "congelado",
+        "recalculado"
+      ],
+      "default": "borrador",
+      "description": "Estado del microciclo"
+    },
+    "entrenador": {
+      "type": "string",
+      "description": "Entrenador o responsable"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Fecha/hora de creaci\u00f3n del snapshot"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora de \u00faltima actualizaci\u00f3n del snapshot"
+    },
+    "archived_at": {
+      "type": "string",
+      "description": "Fecha/hora de archivado"
+    },
+    "finalized_at": {
+      "type": "string",
+      "description": "Fecha/hora de finalizaci\u00f3n"
+    },
+    "source_weekly_plan_id": {
+      "type": "string",
+      "description": "Plan semanal origen"
+    },
+    "duplicated_from_id": {
+      "type": "string",
+      "description": "ID del microciclo usado como base para duplicar"
+    },
+    "snapshot_locked": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si conserva el snapshot original sin recalcular"
+    },
+    "pdf_url": {
+      "type": "string",
+      "description": "PDF hist\u00f3rico guardado si existe"
+    },
+    "pdf_generated_at": {
+      "type": "string",
+      "description": "Fecha de \u00faltima exportaci\u00f3n PDF"
+    },
+    "exports_snapshot": {
+      "type": "object",
+      "description": "URLs y metadatos de exportaciones preservadas"
+    },
+    "days_snapshot": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": [],
+      "description": "D\u00edas del microciclo congelados"
+    },
+    "sessions_snapshot": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": [],
+      "description": "Sesiones del microciclo congeladas"
+    },
+    "physical_objectives_snapshot": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": [],
+      "description": "Objetivos f\u00edsicos por d\u00eda/sesi\u00f3n"
+    },
+    "md_codes_snapshot": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": [],
+      "description": "C\u00f3digos MD por d\u00eda/sesi\u00f3n"
+    },
+    "load_summary_snapshot": {
+      "type": "object",
+      "description": "Resumen de carga congelado"
+    },
+    "ai_analysis_snapshot": {
+      "type": "object",
+      "description": "An\u00e1lisis IA guardado"
+    },
+    "reports_snapshot": {
+      "type": "object",
+      "description": "Reportes asociados conservados"
+    },
+    "snapshot": {
+      "type": "object",
+      "description": "Snapshot congelado completo del microciclo"
+    },
+    "summary_snapshot": {
+      "type": "object",
+      "description": "Resumen semanal"
+    },
+    "charts_snapshot": {
+      "type": "object",
+      "description": "Datos para gr\u00e1ficos"
+    },
+    "rankings_snapshot": {
+      "type": "object",
+      "description": "Rankings Top 3"
+    },
+    "gps_variables_snapshot": {
+      "type": "object",
+      "description": "Variables GPS agregadas"
+    },
+    "promedios_snapshot": {
+      "type": "object",
+      "description": "Promedios filtrados del microciclo"
+    },
+    "highlighted_players_snapshot": {
+      "type": "object",
+      "description": "Jugadores destacados del microciclo"
+    },
+    "team_profile_snapshot": {
+      "type": "object",
+      "description": "Perfil del equipo al momento del cierre"
+    },
+    "weekly_comparison_snapshot": {
+      "type": "object",
+      "description": "Comparaci\u00f3n con microciclo anterior"
+    },
+    "filters_snapshot": {
+      "type": "object",
+      "description": "Filtros aplicados al guardar/cerrar"
+    },
+    "observations": {
+      "type": "string",
+      "description": "Observaciones del microciclo"
+    },
+    "conclusions": {
+      "type": "string",
+      "description": "Conclusiones del microciclo"
+    },
+    "recalculated_at": {
+      "type": "string",
+      "description": "\u00daltimo rec\u00e1lculo"
+    }
+  },
+  "required": [
+    "squad_id",
+    "fecha_inicio",
+    "fecha_fin"
+  ]
+}

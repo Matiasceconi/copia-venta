@@ -1,0 +1,70 @@
+{
+  "name": "PlayerGPSMicrocycleProfile",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "Plantel actual del jugador (informativo)"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada (informativo)"
+    },
+    "md": {
+      "type": "string",
+      "description": "C\u00f3digo de d\u00eda del microciclo (MD-6...MD+4, Otro)"
+    },
+    "sessions_count": {
+      "type": "number",
+      "description": "Sesiones normales usadas en el promedio para este MD"
+    },
+    "avg_total_distance": {
+      "type": "number",
+      "description": "Distancia total promedio (m)"
+    },
+    "avg_m_min": {
+      "type": "number",
+      "description": "Metros por minuto promedio"
+    },
+    "avg_distance_19_8": {
+      "type": "number",
+      "description": "D 19,8-25,0 km/h promedio (m)"
+    },
+    "avg_distance_25": {
+      "type": "number",
+      "description": "D+ 25,0 km/h promedio (m)"
+    },
+    "avg_sprints": {
+      "type": "number",
+      "description": "Sprint Efforts promedio"
+    },
+    "avg_acc_3": {
+      "type": "number",
+      "description": "Acc +3mt/s promedio"
+    },
+    "avg_dec_3": {
+      "type": "number",
+      "description": "Dec +3mt/s promedio"
+    },
+    "avg_player_load": {
+      "type": "number",
+      "description": "Player Load promedio"
+    },
+    "max_smax": {
+      "type": "number",
+      "description": "Velocidad m\u00e1xima registrada en este MD (km/h)"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora del \u00faltimo rec\u00e1lculo (ISO)"
+    }
+  },
+  "required": [
+    "player_id",
+    "md"
+  ]
+}

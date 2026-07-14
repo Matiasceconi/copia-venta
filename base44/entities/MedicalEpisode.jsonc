@@ -1,0 +1,105 @@
+{
+  "name": "MedicalEpisode",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador vinculado (vac\u00edo si no se pudo vincular)"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel (si se pudo determinar)"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada"
+    },
+    "source_sheet_row_id": {
+      "type": "string",
+      "description": "N\u00famero de fila de origen en Google Sheets (vac\u00edo si el episodio es manual)"
+    },
+    "player_name_original": {
+      "type": "string",
+      "description": "Nombre del jugador tal como figura en la fuente"
+    },
+    "categoria_division": {
+      "type": "string",
+      "description": "Categor\u00eda / Divisi\u00f3n"
+    },
+    "lesion_consulta": {
+      "type": "string",
+      "description": "Lesi\u00f3n o motivo de consulta"
+    },
+    "mmii_afectado": {
+      "type": "string",
+      "description": "Miembro inferior afectado"
+    },
+    "fecha_inicio_tto": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de inicio de tratamiento"
+    },
+    "fecha_final_tto": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha final de tratamiento / alta"
+    },
+    "perdida_dias": {
+      "type": "number",
+      "description": "D\u00edas perdidos"
+    },
+    "etapa_rhb": {
+      "type": "string",
+      "description": "Etapa de la rehabilitaci\u00f3n"
+    },
+    "observaciones": {
+      "type": "string",
+      "description": "Observaciones"
+    },
+    "medical_status": {
+      "type": "string",
+      "enum": [
+        "lesionado",
+        "en_recuperacion",
+        "kinesiologia",
+        "consulta",
+        "alta"
+      ],
+      "description": "Clasificaci\u00f3n del episodio seg\u00fan su contenido"
+    },
+    "medical_episode_key": {
+      "type": "string",
+      "description": "Clave \u00fanica usada para hacer upsert y evitar duplicados en sincronizaciones repetidas"
+    },
+    "linked": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si el episodio qued\u00f3 vinculado a un jugador oficial de la plataforma"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "google_sheets",
+        "app"
+      ],
+      "default": "google_sheets",
+      "description": "Origen del registro: sincronizado desde Google Sheets o editado manualmente en la app"
+    },
+    "last_synced_at": {
+      "type": "string",
+      "description": "Fecha/hora ISO de la \u00faltima sincronizaci\u00f3n desde Google Sheets"
+    },
+    "edited_by": {
+      "type": "string",
+      "description": "Nombre del usuario que edit\u00f3 manualmente este registro por \u00faltima vez"
+    },
+    "edited_at": {
+      "type": "string",
+      "description": "Fecha/hora ISO de la \u00faltima edici\u00f3n manual"
+    }
+  },
+  "required": [
+    "player_name_original",
+    "lesion_consulta"
+  ]
+}

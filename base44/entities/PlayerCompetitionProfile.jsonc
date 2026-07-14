@@ -1,0 +1,69 @@
+{
+  "name": "PlayerCompetitionProfile",
+  "type": "object",
+  "properties": {
+    "player_id": {
+      "type": "string",
+      "description": "ID del jugador"
+    },
+    "squad_id": {
+      "type": "string",
+      "description": "Plantel"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada (season del plantel)"
+    },
+    "matches_used": {
+      "type": "number",
+      "description": "Cantidad de partidos con +80' usados en el c\u00e1lculo"
+    },
+    "avg_total_distance": {
+      "type": "number",
+      "description": "Distancia total promedio (m)"
+    },
+    "avg_m_min": {
+      "type": "number",
+      "description": "Metros por minuto promedio"
+    },
+    "avg_distance_14_19_8": {
+      "type": "number",
+      "description": "D 14-19,8 km/h promedio (m)"
+    },
+    "avg_distance_19_8": {
+      "type": "number",
+      "description": "D 19,8-25,0 km/h promedio (m)"
+    },
+    "avg_distance_25": {
+      "type": "number",
+      "description": "D+25,0 km/h promedio (m)"
+    },
+    "avg_sprints": {
+      "type": "number",
+      "description": "Sprint Efforts promedio"
+    },
+    "avg_acc_3": {
+      "type": "number",
+      "description": "Aceleraciones +3mt/s promedio"
+    },
+    "avg_dec_3": {
+      "type": "number",
+      "description": "Desaceleraciones +3mt/s promedio"
+    },
+    "avg_player_load": {
+      "type": "number",
+      "description": "Player Load promedio"
+    },
+    "avg_smax": {
+      "type": "number",
+      "description": "Velocidad m\u00e1xima promedio (km/h)"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Fecha/hora del \u00faltimo rec\u00e1lculo (ISO)"
+    }
+  },
+  "required": [
+    "player_id"
+  ]
+}

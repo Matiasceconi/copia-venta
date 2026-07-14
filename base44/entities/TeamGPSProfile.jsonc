@@ -1,0 +1,84 @@
+{
+  "name": "TeamGPSProfile",
+  "type": "object",
+  "properties": {
+    "squad_id": {
+      "type": "string",
+      "description": "ID del plantel"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Temporada"
+    },
+    "player_type": {
+      "type": "string",
+      "enum": [
+        "campo",
+        "arqueros",
+        "total"
+      ],
+      "default": "campo",
+      "description": "Grupo del perfil"
+    },
+    "total_sessions": {
+      "type": "number",
+      "description": "Sesiones usadas"
+    },
+    "avg_total_distance": {
+      "type": "number",
+      "description": "Distancia total promedio (m)"
+    },
+    "avg_m_min": {
+      "type": "number",
+      "description": "Metros por minuto promedio"
+    },
+    "avg_distance_19_8": {
+      "type": "number",
+      "description": "D 19,8-25,0 km/h promedio (m)"
+    },
+    "avg_distance_25": {
+      "type": "number",
+      "description": "D+25,0 km/h promedio (m)"
+    },
+    "avg_sprints": {
+      "type": "number",
+      "description": "Sprint Efforts promedio"
+    },
+    "avg_acc_3": {
+      "type": "number",
+      "description": "Acc +3mt/s promedio"
+    },
+    "avg_dec_3": {
+      "type": "number",
+      "description": "Dec +3mt/s promedio"
+    },
+    "avg_player_load": {
+      "type": "number",
+      "description": "Player Load promedio"
+    },
+    "avg_player_load_per_min": {
+      "type": "number",
+      "description": "Player Load por minuto promedio"
+    },
+    "avg_smax": {
+      "type": "number",
+      "description": "Velocidad m\u00e1xima promedio (km/h)"
+    },
+    "avg_rhie": {
+      "type": "number",
+      "description": "RHIE promedio"
+    },
+    "max_smax": {
+      "type": "number",
+      "description": "Velocidad m\u00e1xima hist\u00f3rica (km/h)"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "\u00daltimo rec\u00e1lculo"
+    }
+  },
+  "required": [
+    "squad_id",
+    "player_type"
+  ]
+}
