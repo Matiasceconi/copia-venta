@@ -180,42 +180,17 @@
     "fecha"
   ],
   "rls": {
-    "create": true,
+    "create": {
+      "data.organization_id": "{{user.data.active_organization_id}}"
+    },
     "read": {
-      "$or": [
-        {
-          "data.organization_id": "{{user.data.active_organization_id}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
+      "data.organization_id": "{{user.data.active_organization_id}}"
     },
     "update": {
-      "$or": [
-        {
-          "data.organization_id": "{{user.data.active_organization_id}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
+      "data.organization_id": "{{user.data.active_organization_id}}"
     },
     "delete": {
-      "$or": [
-        {
-          "data.organization_id": "{{user.data.active_organization_id}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
+      "data.organization_id": "{{user.data.active_organization_id}}"
     }
   }
 }
